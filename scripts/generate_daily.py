@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output" / "current"
 DATA = ROOT / "data"
 HISTORY_PATH = DATA / "image_history.json"
+CONCEPT_HISTORY_PATH = DATA / "concept_history.json"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 HEADERS = {
     "User-Agent": "ARCSTUDIO91DailyPublisher/1.0 (https://github.com/artclass11/ARCSTUDIO; architecture inspiration and attribution)"
@@ -366,10 +367,43 @@ def make_caption(concept: dict[str, Any], photos: list[dict[str, Any]], today: d
     (OUT / "caption.txt").write_text(text, encoding="utf-8")
     return text
 
+def editorial_pillar(concept: dict[str, Any]) -> str:
+    label = (concept.get("type", "") + " " + concept.get("headline", "")).lower()
+    if any(k in label for k in ("landscape", "rain garden", "public seating", "pavilion", "courtyard garden")):
+        return "Landscape & public space"
+    if any(k in label for k in ("clinic", "healthcare", "school", "library", "wayfinding", "accessible", "multi-generation")):
+        return "People-first places"
+    if any(k in label for k in ("reuse", "heritage", "warehouse")):
+        return "Adaptive reuse"
+    if any(k in label for k in ("material", "facade", "maintenance", "repair", "durability", "coastal", "flood", "drainage")):
+        return "Durability & resilience"
+    if any(k in label for k in ("office", "apartment", "home", "house", "villa", "work-live")):
+        return "Space planning"
+    if any(k in label for k in ("hotel", "restaurant", "cafe", "café", "retail", "market", "guesthouse")):
+        return "Hospitality & commercial"
+    if any(k in label for k in ("shade", "daylight", "ventilation", "climate", "sun", "rain")):
+        return "Climate-wise design"
+    return "Original design study"
+
+
 def main() -> None:
     today = date.today()
-    concept = CONCEPTS[today.toordinal() % len(CONCEPTS)]
     DATA.mkdir(parents=True, exist_ok=True)
+    try:
+        concept_history_data = json.loads(CONCEPT_HISTORY_PATH.read_text(encoding="utf-8")) if CONCEPT_HISTORY_PATH.exists() else {"concepts": []}
+    except (OSError, ValueError):
+        concept_history_data = {"concepts": []}
+    concept_entries = concept_history_data.get("concepts", [])
+    todays_entry = next((entry for entry in reversed(concept_entries) if entry.get("date") == today.isoformat()), None)
+    by_type = {item.get("type"): item for item in CONCEPTS}
+    if todays_entry and todays_entry.get("type") in by_type:
+        concept = by_type[todays_entry["type"]]
+    else:
+        recent_names = {entry.get("type") for entry in concept_entries[-30:]}
+        eligible = [item for item in CONCEPTS if item.get("type") not in recent_names]
+        if not eligible:
+            eligible = CONCEPTS
+        concept = eligible[today.toordinal() % len(eligible)]
     history = json.loads(HISTORY_PATH.read_text(encoding="utf-8")) if HISTORY_PATH.exists() else {"images": []}
     recent = history.get("images", [])[-80:]
     recent_titles = {entry.get("title") for entry in recent}
@@ -391,6 +425,17 @@ def main() -> None:
     recent.extend({"date": today.isoformat(), "title": photo["title"]} for photo in photos)
     history["images"] = recent[-80:]
     HISTORY_PATH.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    if not todays_entry:
+        concept_entries.append({
+            "date": today.isoformat(),
+            "pillar": editorial_pillar(concept),
+            "type": concept["type"],
+            "headline": concept["headline"],
+            "insight": concept.get("comfort", ""),
+            "visual_motif": concept.get("queries", [""])[0],
+        })
+        concept_history_data["concepts"] = concept_entries[-120:]
+        CONCEPT_HISTORY_PATH.write_text(json.dumps(concept_history_data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Generated four separate {SIZE[0]}x{SIZE[1]} slides for {today}: {concept['type']} / {concept['headline']}")
     print(f"Caption length: {len(caption)}. Sources are recorded in output/current/sources.json.")
 
