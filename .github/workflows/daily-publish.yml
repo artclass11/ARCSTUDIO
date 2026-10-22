@@ -1,0 +1,73 @@
+name: ARCSTUDIO91 Daily Architecture
+
+on:
+  schedule:
+    # 02:37 UTC = 08:07 Asia/Kolkata. Offset away from the top of the hour.
+    - cron: "37 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: arcstudio91-daily-publishing
+  cancel-in-progress: false
+
+jobs:
+  create-and-publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out publisher
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install fonts and dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core fonts-noto-devanagari fontconfig
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate four separate slides
+        run: python scripts/generate_daily.py
+
+      - name: Commit public media and source history
+        id: commit_media
+        run: |
+          git config user.name "ARCSTUDIO91 Daily Publisher"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/current data/image_history.json
+          git commit -m "ARCSTUDIO91 daily carousel $(date -u +%F)" || echo "No asset changes to commit"
+          git push origin HEAD:main
+          echo "asset_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Keep package available for download
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARCSTUDIO91-carousel-${{ github.run_id }}
+          path: |
+            output/current/slide_*.jpg
+            output/current/caption.txt
+            output/current/sources.json
+            output/current/concept.json
+          retention-days: 30
+
+      - name: Publish to Instagram and Facebook Page
+        env:
+          AUTO_PUBLISH_ENABLED: ${{ vars.AUTO_PUBLISH_ENABLED }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+          META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ASSET_COMMIT_SHA: ${{ steps.commit_media.outputs.asset_sha }}
+          META_GRAPH_API_VERSION: v26.0
+        run: python scripts/publish_daily.py
