@@ -343,11 +343,77 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
         draw.text((x, 1280), "PHOTO SOURCES + LICENCES IN CAPTION", font=font(16), fill=muted)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"slide_{index:02d}.jpg"
-    image.convert("RGB").save(path, format="JPEG", quality=92, optimize=True, progressive=True, subsampling=0)
+    png_path = OUT / f"slide_{index:02d}.png"
+    image.convert("RGB").save(path, format="JPEG", quality=94, optimize=True, progressive=True, subsampling=0)
+    image.convert("RGB").save(png_path, format="PNG", optimize=True)
     with Image.open(path) as check:
         if check.size != SIZE or check.format != "JPEG":
             raise RuntimeError(f"Quality gate failed for {path.name}: {check.size}/{check.format}")
+    with Image.open(png_path) as check:
+        if check.size != SIZE or check.format != "PNG":
+            raise RuntimeError(f"Quality gate failed for {png_path.name}: {check.size}/{check.format}")
     return path
+
+ENGAGEMENT_PROMPTS = [
+    ("तुमच्या जागेत आधी काय सुधाराल—सावली, मार्ग की देखभाल?", "What would you improve first: shade, circulation or maintenance?"),
+    ("लहान जागेत तुम्ही कशाला प्राधान्य द्याल—साठवण, प्रकाश की गोपनीयता?", "In a compact space, what comes first: storage, light or privacy?"),
+    ("इमारतीच्या देखभालीत कोणता तपशील सर्वाधिक दुर्लक्षित होतो?", "Which building-maintenance detail is most often overlooked?"),
+    ("जुन्या इमारतीत तुम्ही काय जपायला प्राधान्य द्याल—साहित्य, प्रकाश की मांडणी?", "In an existing building, what would you preserve first: materials, daylight or layout?"),
+    ("शांत जागेसाठी तुमच्या मते काय महत्त्वाचे—ध्वनी, प्रकाश की मांडणी?", "What helps a space feel calmer: acoustics, light or layout?"),
+    ("पुढील पोस्टमध्ये काय पाहायला आवडेल—साहित्य, हवामान की स्पेस प्लॅनिंग?", "What should we explore next: materials, climate or space planning?"),
+]
+
+
+def create_contact_sheet(paths: list[Path]) -> Path:
+    OUT.mkdir(parents=True, exist_ok=True)
+    thumb_w, thumb_h = 405, 506
+    margin, gap = 28, 22
+    canvas = Image.new("RGB", (margin * 2 + thumb_w * 2 + gap, margin * 2 + thumb_h * 2 + gap), (24, 26, 27))
+    for index, path in enumerate(paths):
+        with Image.open(path) as source:
+            thumb = ImageOps.fit(source.convert("RGB"), (thumb_w, thumb_h), method=Image.Resampling.LANCZOS)
+        x = margin + (index % 2) * (thumb_w + gap)
+        y = margin + (index // 2) * (thumb_h + gap)
+        canvas.paste(thumb, (x, y))
+    target = OUT / "preview_contact_sheet.jpg"
+    canvas.save(target, format="JPEG", quality=92, optimize=True)
+    with Image.open(target) as check:
+        if check.format != "JPEG" or check.size != canvas.size:
+            raise RuntimeError("Contact sheet validation failed.")
+    return target
+
+
+def write_research_notes(concept: dict[str, Any], photos: list[dict[str, Any]], today: date) -> Path:
+    notes = [
+        f"# ARCSTUDIO91 daily research and quality notes — {today.isoformat()}",
+        "",
+        f"- Editorial pillar: {editorial_pillar(concept)}",
+        f"- Typology: {concept['type']}",
+        f"- Original design study: {concept['idea']}",
+        f"- Practical comfort lens: {concept['comfort']}",
+        f"- Durability/maintenance lens: {concept['life']}",
+        "- Scope: general educational design discussion, not construction advice or a site-specific specification.",
+        "- Image status: licensed reference photography; these images are not represented as completed ARCSTUDIO91 projects.",
+        "- Profile status: the public Instagram profile is only used if accessible; no profile observations are inferred by this generator.",
+        "",
+        "## Image source, author and licence",
+    ]
+    for index, photo in enumerate(photos, start=1):
+        notes.extend([
+            f"{index}. **{photo['title']}**",
+            f"   - Creator/credit: {photo['artist']}",
+            f"   - Licence: {photo['license']}",
+            f"   - Licence URL: {photo.get('license_url') or 'Not supplied in Commons metadata'}",
+            f"   - Source: {photo['source_page']}",
+        ])
+    notes.extend([
+        "",
+        "Research limitation: this automated run verifies image source/licence metadata and rotates the editorial concept. It does not claim a comprehensive live survey of worldwide architecture trends.",
+    ])
+    target = OUT / "research_notes.md"
+    target.write_text("\n".join(notes) + "\n", encoding="utf-8")
+    return target
+
 
 def make_caption(concept: dict[str, Any], photos: list[dict[str, Any]], today: date) -> str:
     text = (
@@ -361,6 +427,8 @@ def make_caption(concept: dict[str, Any], photos: list[dict[str, Any]], today: d
     )
     for i, photo in enumerate(photos, start=1):
         text += f"{i}. {photo['title'][:60]} — {photo['artist'][:60]} ({photo['license']}); {photo['source_page']}\n"
+    question_mr, question_en = ENGAGEMENT_PROMPTS[today.toordinal() % len(ENGAGEMENT_PROMPTS)]
+    text += f"\n\n{question_mr}\n{question_en}"
     text += "\n#ARCSTUDIO91 #FunctionalArchitecture #SustainableArchitecture #ClimateResponsiveDesign"
     if len(text) > 2200:
         raise RuntimeError("Caption with photo attributions exceeds Instagram's 2,200-character limit.")
@@ -410,9 +478,14 @@ def main() -> None:
     used_today: set[str] = set()
     photos = [choose_image(query, used_today, recent_titles) for query in concept["queries"]]
     paths = [render_slide(photo, concept, index) for index, photo in enumerate(photos, start=1)]
+    contact_sheet = create_contact_sheet(paths)
     caption = make_caption(concept, photos, today)
+    research_notes = write_research_notes(concept, photos, today)
     metadata = {
-        "date": today.isoformat(), "concept": concept["type"], "headline": concept["headline"],
+        "date": today.isoformat(), "pillar": editorial_pillar(concept),
+        "concept": concept["type"], "headline": concept["headline"],
+        "contact_sheet": str(contact_sheet.relative_to(ROOT)),
+        "research_notes": str(research_notes.relative_to(ROOT)),
         "photos": [{key: value for key, value in photo.items() if key != "bytes"} for photo in photos],
         "files": [str(path.relative_to(ROOT)) for path in paths], "caption_length": len(caption),
     }
