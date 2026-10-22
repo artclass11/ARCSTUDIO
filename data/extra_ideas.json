@@ -295,5 +295,437 @@
       "workshop entrance industrial architecture",
       "workshop durable flooring wall protection"
     ]
+  },
+  {
+    "type": "Accessible apartment entrance",
+    "headline": "MAKE ARRIVAL EASIER",
+    "mr": "प्रवेश अधिक सोपा करा",
+    "idea": "An apartment entry sequence that makes the route from street to lift easy to read and use.",
+    "idea_mr": "रस्त्यापासून लिफ्टपर्यंतचा मार्ग सहज समजेल आणि वापरता येईल अशी अपार्टमेंट प्रवेशरचना.",
+    "comfort": "Keep the route clear, sheltered and logically signed.",
+    "comfort_mr": "मार्ग मोकळा, आच्छादित आणि सहज समजेल असा ठेवा.",
+    "life": "Choose robust threshold and door details that can be inspected and repaired.",
+    "life_mr": "तपासता व दुरुस्त करता येतील असे मजबूत उंबरठे आणि दरवाजांचे तपशील निवडा.",
+    "materials": [
+      "Slip-resistant entrance flooring",
+      "Replaceable door hardware",
+      "Lighting with accessible maintenance"
+    ],
+    "materials_mr": [
+      "न घसरणारा प्रवेश-मजला",
+      "बदलता येणारे दरवाजाचे हार्डवेअर",
+      "सहज देखभाल करता येणारी प्रकाशयोजना"
+    ],
+    "queries": [
+      "accessible apartment entrance architecture",
+      "apartment lift lobby daylight design",
+      "apartment entrance threshold detail",
+      "residential corridor lighting architecture"
+    ]
+  },
+  {
+    "type": "Small healthcare clinic",
+    "headline": "CALM STARTS AT THE DOOR",
+    "mr": "शांततेची सुरुवात प्रवेशापासून",
+    "idea": "A small clinic layout with a clear arrival point, private consultation route and legible waiting area.",
+    "idea_mr": "स्पष्ट प्रवेश, गोपनीय सल्लामसलत मार्ग आणि सहज समजणारी प्रतीक्षा-जागा असलेले छोटे क्लिनिक.",
+    "comfort": "Separate noisy arrival activity from private conversations where possible.",
+    "comfort_mr": "शक्य असल्यास प्रवेशातील गोंगाट आणि गोपनीय संभाषणांची जागा वेगळी ठेवा.",
+    "life": "Use cleanable, repairable finishes and plan access to service points.",
+    "life_mr": "सहज स्वच्छ व दुरुस्त करता येणारे फिनिश निवडा आणि सेवांच्या तपासणीची सोय ठेवा.",
+    "materials": [
+      "Cleanable wall and floor finishes",
+      "Replaceable privacy hardware",
+      "Accessible service panels"
+    ],
+    "materials_mr": [
+      "सहज स्वच्छ होणारे भिंत व मजल्याचे फिनिश",
+      "बदलता येणारे गोपनीयता हार्डवेअर",
+      "सहज उघडता येणारे सेवा पॅनेल"
+    ],
+    "queries": [
+      "small clinic architecture waiting room",
+      "healthcare reception design natural light",
+      "clinic corridor wayfinding architecture",
+      "healthcare cleanable interior material detail"
+    ]
+  },
+  {
+    "type": "School outdoor classroom",
+    "headline": "LET LEARNING STEP OUTSIDE",
+    "mr": "शिकण्याची जागा बाहेरही असू द्या",
+    "idea": "A school learning edge that connects a classroom to a shaded outdoor teaching area.",
+    "idea_mr": "वर्गखोलीला सावलीच्या बाहेरील शिक्षण-जागेशी जोडणारी शाळेची रचना.",
+    "comfort": "Provide shade and clear sightlines while allowing flexible group sizes.",
+    "comfort_mr": "गटानुसार वापर बदलता येईल अशी जागा, सावली आणि स्पष्ट दृश्ये द्या.",
+    "life": "Select surfaces and seating that can be cleaned and repaired in sections.",
+    "life_mr": "भागांनुसार स्वच्छ व दुरुस्त करता येतील असे पृष्ठभाग आणि आसन निवडा.",
+    "materials": [
+      "Weather-suited shaded canopy",
+      "Repairable outdoor benches",
+      "Durable non-glare paving"
+    ],
+    "materials_mr": [
+      "हवामानाला अनुरूप सावलीचे छत",
+      "दुरुस्त करता येणारी बाहेरील बाके",
+      "टिकाऊ कमी झगमगाटाचे पॅव्हिंग"
+    ],
+    "queries": [
+      "school outdoor classroom architecture",
+      "shaded school courtyard learning",
+      "outdoor classroom benches landscape",
+      "school courtyard paving shade design"
+    ]
+  },
+  {
+    "type": "Quiet office corner",
+    "headline": "GIVE FOCUS A PLACE",
+    "mr": "एकाग्रतेसाठी जागा ठेवा",
+    "idea": "An office plan that offers quiet focus areas without isolating teams from shared work.",
+    "idea_mr": "सामायिक कामापासून पूर्ण वेगळे न करता शांत एकाग्रतेच्या जागा देणारा कार्यालयीन आराखडा.",
+    "comfort": "Use distance, soft finishes and layout to manage everyday noise.",
+    "comfort_mr": "दैनंदिन आवाज कमी करण्यासाठी अंतर, योग्य मऊ फिनिश आणि मांडणी वापरा.",
+    "life": "Choose modular screens and fittings that can be moved or replaced.",
+    "life_mr": "हलवता किंवा बदलता येतील असे मॉड्युलर स्क्रीन आणि फिटिंग्स निवडा.",
+    "materials": [
+      "Reconfigurable acoustic screens",
+      "Low-glare task lighting",
+      "Replaceable workstation components"
+    ],
+    "materials_mr": [
+      "बदलता येणारे ध्वनी-नियंत्रक स्क्रीन",
+      "कमी झगमगाटाचे कामाचे दिवे",
+      "बदलता येणारे वर्कस्टेशन घटक"
+    ],
+    "queries": [
+      "quiet focus office architecture",
+      "office acoustic screen daylight interior",
+      "flexible office workspace design",
+      "office task lighting workstation design"
+    ]
+  },
+  {
+    "type": "Hotel housekeeping flow",
+    "headline": "GOOD SERVICE NEEDS A ROUTE",
+    "mr": "चांगल्या सेवेसाठी स्पष्ट मार्ग",
+    "idea": "A compact hotel floor planned so guest circulation and housekeeping tasks can work without conflict.",
+    "idea_mr": "पाहुण्यांची हालचाल आणि हाउसकीपिंगची कामे एकमेकांत अडथळा न आणता होऊ शकतील असा हॉटेल मजला.",
+    "comfort": "Keep guest routes simple and service activity discreet.",
+    "comfort_mr": "पाहुण्यांचे मार्ग सोपे आणि सेवा-काम शक्य तितके बाजूला ठेवा.",
+    "life": "Use standard, replaceable fittings and accessible cleaning points.",
+    "life_mr": "स्टँडर्ड बदलता येणारी फिटिंग्स आणि सहज स्वच्छ करता येणारे भाग ठेवा.",
+    "materials": [
+      "Replaceable door and cabinet hardware",
+      "Durable corridor flooring",
+      "Accessible cleaning and service storage"
+    ],
+    "materials_mr": [
+      "बदलता येणारे दरवाजे व कपाटांचे हार्डवेअर",
+      "टिकाऊ कॉरिडॉर फ्लोअरिंग",
+      "सहज पोहोचता येणारी स्वच्छता व सेवा-साठवण"
+    ],
+    "queries": [
+      "hotel corridor architecture design",
+      "hotel housekeeping service circulation",
+      "compact hotel room service access",
+      "durable hotel corridor flooring detail"
+    ]
+  },
+  {
+    "type": "Rain garden public edge",
+    "headline": "MAKE ROOM FOR RAIN",
+    "mr": "पावसासाठी जागा ठेवा",
+    "idea": "A public-space edge that slows and guides rainwater through planted ground instead of sending it straight away.",
+    "idea_mr": "पाणी लगेच दूर ढकलण्याऐवजी लागवड केलेल्या भागातून त्याचा वेग कमी करून मार्गदर्शन करणारी सार्वजनिक जागा.",
+    "comfort": "Use shade and planted edges to make short outdoor pauses more pleasant.",
+    "comfort_mr": "थोडा वेळ बाहेर थांबणे सुखकर होण्यासाठी सावली आणि हिरवे कडे तयार करा.",
+    "life": "Confirm soil, overflow and local drainage conditions before specifying a rain garden.",
+    "life_mr": "रेन गार्डन ठरवण्यापूर्वी माती, अतिरिक्त पाण्याचा मार्ग आणि स्थानिक निचरा तपासा.",
+    "materials": [
+      "Locally suitable planting",
+      "Permeable paving where appropriate",
+      "Accessible overflow and drain points"
+    ],
+    "materials_mr": [
+      "स्थानिक परिस्थितीला अनुरूप लागवड",
+      "योग्य ठिकाणी पाणी झिरपणारे पॅव्हिंग",
+      "सहज तपासता येणारे अतिरिक्त निचरा बिंदू"
+    ],
+    "queries": [
+      "rain garden public space landscape architecture",
+      "planted stormwater landscape urban",
+      "permeable paving public courtyard",
+      "rain garden overflow drainage detail"
+    ]
+  },
+  {
+    "type": "Adaptive reuse community hall",
+    "headline": "KEEP WHAT STILL WORKS",
+    "mr": "जे उपयोगी आहे ते जपा",
+    "idea": "A community hall renewal that starts by mapping what can be kept before adding new materials.",
+    "idea_mr": "नवीन साहित्य जोडण्याआधी काय जपता येईल हे नोंदवून सुरू होणारे सभागृह नूतनीकरण.",
+    "comfort": "Improve daylight and movement using the existing building's useful openings.",
+    "comfort_mr": "विद्यमान इमारतीतील उपयुक्त उघड्या जागांचा वापर करून प्रकाश आणि हालचाल सुधारा.",
+    "life": "Inspect structure and moisture conditions before reusing old components.",
+    "life_mr": "जुने घटक पुन्हा वापरण्याआधी संरचना आणि ओलाव्याची तपासणी करा.",
+    "materials": [
+      "Salvaged elements after condition checks",
+      "Repairable wall finishes",
+      "Modular seating and lighting"
+    ],
+    "materials_mr": [
+      "स्थिती तपासून पुन्हा वापरलेले घटक",
+      "दुरुस्त करता येणारे भिंतीचे फिनिश",
+      "मॉड्युलर आसन आणि प्रकाशयोजना"
+    ],
+    "queries": [
+      "community hall adaptive reuse architecture",
+      "renovated public hall natural light",
+      "adaptive reuse community interior",
+      "salvaged architectural materials restoration"
+    ]
+  },
+  {
+    "type": "Low-water landscape courtyard",
+    "headline": "PLANT FOR THE PLACE",
+    "mr": "जागेनुसार लागवड करा",
+    "idea": "A small courtyard landscape selected around local climate, usable shade and realistic maintenance.",
+    "idea_mr": "स्थानिक हवामान, उपयोगी सावली आणि प्रत्यक्ष देखभाल लक्षात घेऊन निवडलेली छोटी अंगण-बाग.",
+    "comfort": "Place planting where it shades useful paths and seating.",
+    "comfort_mr": "उपयोगी मार्ग आणि बसण्याच्या जागांना सावली मिळेल तिथे लागवड करा.",
+    "life": "Choose species with local advice and match irrigation to actual site conditions.",
+    "life_mr": "स्थानिक सल्ल्याने वनस्पती निवडा आणि जागेच्या गरजेनुसार सिंचन ठरवा.",
+    "materials": [
+      "Locally appropriate planting palette",
+      "Maintainable edging",
+      "Repairable irrigation access points"
+    ],
+    "materials_mr": [
+      "स्थानिक परिस्थितीला अनुरूप वनस्पती",
+      "देखभाल सोपी असलेली किनार",
+      "दुरुस्त करता येणारे सिंचन बिंदू"
+    ],
+    "queries": [
+      "climate responsive courtyard landscape",
+      "low water landscape courtyard planting",
+      "shaded courtyard native planting",
+      "irrigation access point landscape detail"
+    ]
+  },
+  {
+    "type": "Multi-generation home",
+    "headline": "MAKE ROOM FOR CHANGE",
+    "mr": "बदलांसाठी जागा ठेवा",
+    "idea": "A home concept that balances shared family space with quieter zones and adaptable rooms.",
+    "idea_mr": "सामायिक कौटुंबिक जागा आणि शांत भाग यांचा समतोल साधणारे, बदलता येणाऱ्या खोल्यांचे घर.",
+    "comfort": "Plan useful privacy transitions between gathering areas and bedrooms.",
+    "comfort_mr": "सामायिक जागा आणि शयनकक्षांमध्ये गोपनीयतेचा योग्य बदल ठेवा.",
+    "life": "Use simple layouts and standard components to make future repairs or adjustments easier.",
+    "life_mr": "भविष्यातील दुरुस्ती किंवा बदल सोपे व्हावेत म्हणून साधा आराखडा आणि स्टँडर्ड घटक वापरा.",
+    "materials": [
+      "Flexible non-structural partitions where suitable",
+      "Standard door sizes",
+      "Durable easy-clean surfaces"
+    ],
+    "materials_mr": [
+      "योग्य ठिकाणी बदलता येणारे नॉन-स्ट्रक्चरल पार्टिशन्स",
+      "स्टँडर्ड दरवाजाचे आकार",
+      "टिकाऊ व सहज स्वच्छ होणारे पृष्ठभाग"
+    ],
+    "queries": [
+      "multi generational home architecture",
+      "flexible family house interior planning",
+      "home privacy zones floor plan concept",
+      "adaptable residential room layout"
+    ]
+  },
+  {
+    "type": "Material repairability",
+    "headline": "CAN THIS PART BE REPLACED?",
+    "mr": "हा भाग बदलता येतो का?",
+    "idea": "A material selection study that values repairability and local availability alongside appearance.",
+    "idea_mr": "दिसण्याबरोबर दुरुस्तीची सोय आणि स्थानिक उपलब्धता महत्त्वाची मानणारा साहित्य-निवड अभ्यास.",
+    "comfort": "Choose finishes that suit how the space is actually used and cleaned.",
+    "comfort_mr": "जागेचा प्रत्यक्ष वापर आणि स्वच्छतेची पद्धत लक्षात घेऊन फिनिश निवडा.",
+    "life": "Prefer documented specifications and components with realistic replacement routes.",
+    "life_mr": "स्पष्ट तांत्रिक माहिती आणि प्रत्यक्ष बदलता येणारे घटक प्राधान्याने निवडा.",
+    "materials": [
+      "Repairable finish system",
+      "Locally available compatible materials",
+      "Documented product specifications"
+    ],
+    "materials_mr": [
+      "दुरुस्त करता येणारी फिनिश प्रणाली",
+      "स्थानिकरीत्या उपलब्ध सुसंगत साहित्य",
+      "उत्पादनाची नोंदवलेली तांत्रिक माहिती"
+    ],
+    "queries": [
+      "repairable building material detail architecture",
+      "natural material closeup building finish",
+      "replaceable facade panel architectural detail",
+      "local building materials texture architecture"
+    ]
+  },
+  {
+    "type": "Apartment shared terrace",
+    "headline": "MAKE SHARED SPACE USEFUL",
+    "mr": "सामायिक जागा उपयोगी करा",
+    "idea": "A shared apartment terrace arranged for shade, clear circulation and simple upkeep.",
+    "idea_mr": "सावली, मोकळी हालचाल आणि सोपी देखभाल लक्षात घेऊन मांडलेली अपार्टमेंटची सामायिक टेरेस.",
+    "comfort": "Keep seating out of main routes and provide shaded options through the day.",
+    "comfort_mr": "मुख्य मार्ग मोकळे ठेवा आणि दिवसाच्या वेगवेगळ्या वेळांसाठी सावलीची आसन-जागा द्या.",
+    "life": "Design planting, drains and lighting for safe access and routine inspection.",
+    "life_mr": "सुरक्षित प्रवेश आणि नियमित तपासणी लक्षात घेऊन लागवड, निचरा आणि दिवे ठरवा.",
+    "materials": [
+      "Weather-suitable outdoor flooring",
+      "Replaceable lighting fittings",
+      "Accessible drainage points"
+    ],
+    "materials_mr": [
+      "हवामानाला अनुरूप बाहेरील फ्लोअरिंग",
+      "बदलता येणारी दिव्यांची फिटिंग्स",
+      "सहज तपासता येणारे निचरा बिंदू"
+    ],
+    "queries": [
+      "apartment shared terrace landscape architecture",
+      "residential rooftop common area design",
+      "shaded shared terrace seating",
+      "rooftop terrace drain access architecture"
+    ]
+  },
+  {
+    "type": "Wayfinding in public buildings",
+    "headline": "MAKE THE NEXT STEP OBVIOUS",
+    "mr": "पुढचा मार्ग स्पष्ट ठेवा",
+    "idea": "A public interior organised so a first-time visitor can understand where to go without asking repeatedly.",
+    "idea_mr": "पहिल्यांदा येणाऱ्या व्यक्तीलाही वारंवार विचारावे लागू नये अशी सार्वजनिक आतील जागेची मांडणी.",
+    "comfort": "Use sightlines, consistent signs and visible destinations to reduce confusion.",
+    "comfort_mr": "गोंधळ कमी करण्यासाठी स्पष्ट दृश्यरेषा, एकसारखे फलक आणि दिसणारी गंतव्ये ठेवा.",
+    "life": "Keep signs readable, replaceable and positioned for the people using the building.",
+    "life_mr": "वापरकर्त्यांना वाचता येतील आणि सहज बदलता येतील असे फलक योग्य ठिकाणी ठेवा.",
+    "materials": [
+      "Readable high-contrast signs",
+      "Replaceable sign panels",
+      "Durable low-glare surfaces"
+    ],
+    "materials_mr": [
+      "सहज वाचता येणारे उच्च-कॉन्ट्रास्ट फलक",
+      "बदलता येणारे साइन पॅनेल",
+      "टिकाऊ कमी झगमगाटाचे पृष्ठभाग"
+    ],
+    "queries": [
+      "public building wayfinding architecture interior",
+      "library wayfinding signs interior",
+      "hospital corridor clear wayfinding",
+      "public interior circulation sightlines architecture"
+    ]
+  },
+  {
+    "type": "Restaurant acoustic comfort",
+    "headline": "LET CONVERSATION STAY COMFORTABLE",
+    "mr": "संभाषण सुखकर ठेवा",
+    "idea": "A restaurant seating plan that balances lively shared tables with quieter corners.",
+    "idea_mr": "गजबजलेल्या सामायिक टेबलांसोबत शांत कोपरे देणारी रेस्टॉरंट आसन-मांडणी.",
+    "comfort": "Use spacing, soft surfaces and zoning to help manage sound.",
+    "comfort_mr": "आवाज व्यवस्थापनासाठी अंतर, योग्य मऊ पृष्ठभाग आणि विभागणी वापरा.",
+    "life": "Choose cleanable acoustic elements suitable for food-service environments.",
+    "life_mr": "अन्नसेवेच्या जागेला अनुरूप आणि सहज स्वच्छ करता येणारे ध्वनी-शोषक घटक निवडा.",
+    "materials": [
+      "Cleanable acoustic panels",
+      "Durable upholstery",
+      "Replaceable table and chair components"
+    ],
+    "materials_mr": [
+      "सहज स्वच्छ होणारे ध्वनी-पॅनेल",
+      "टिकाऊ अपहोल्स्ट्री",
+      "बदलता येणारे टेबल व खुर्चीचे घटक"
+    ],
+    "queries": [
+      "restaurant acoustic interior architecture",
+      "restaurant dining seating acoustic panels",
+      "cafe interior material acoustic",
+      "restaurant seating layout design"
+    ]
+  },
+  {
+    "type": "Facade maintenance access",
+    "headline": "PLAN THE REPAIR BEFORE IT'S NEEDED",
+    "mr": "दुरुस्तीची सोय आधी ठरवा",
+    "idea": "A facade design review that asks how common exterior components can be inspected and maintained safely.",
+    "idea_mr": "बाह्य भागांची तपासणी आणि देखभाल सुरक्षितपणे कशी होईल हे आधी विचारणारा फसाड डिझाइन आढावा.",
+    "comfort": "Use shading and openings that work with the building's climate and orientation.",
+    "comfort_mr": "इमारतीचे हवामान आणि दिशा लक्षात घेऊन सावली व उघड्या जागा ठरवा.",
+    "life": "Plan safe professional access and replacement methods for exposed components.",
+    "life_mr": "बाह्य घटकांसाठी सुरक्षित व्यावसायिक प्रवेश आणि बदलण्याची पद्धत ठरवा.",
+    "materials": [
+      "Documented exterior finish system",
+      "Replaceable sealants and hardware",
+      "Planned safe maintenance access"
+    ],
+    "materials_mr": [
+      "नोंदवलेली बाह्य फिनिश प्रणाली",
+      "बदलता येणारे सीलंट व हार्डवेअर",
+      "नियोजित सुरक्षित देखभाल प्रवेश"
+    ],
+    "queries": [
+      "facade maintenance access architecture",
+      "repairable building facade panel detail",
+      "external shading facade maintenance design",
+      "building envelope sealant replacement detail"
+    ]
+  },
+  {
+    "type": "Daylight without glare",
+    "headline": "LIGHT THE ROOM, NOT THE SCREEN",
+    "mr": "प्रकाश हवा, झगमगाट नको",
+    "idea": "A workplace or study space planned for useful daylight without placing bright glare directly in the user's view.",
+    "idea_mr": "उपयोगी नैसर्गिक प्रकाश मिळेल पण डोळ्यांसमोर झगमगाट येणार नाही अशी कामाची किंवा अभ्यासाची जागा.",
+    "comfort": "Test window direction, shading and desk placement together.",
+    "comfort_mr": "खिडकीची दिशा, सावली आणि टेबलची जागा एकत्र तपासा.",
+    "life": "Use adjustable, maintainable shading rather than relying on a single fixed treatment for every condition.",
+    "life_mr": "प्रत्येक परिस्थितीसाठी एकच स्थिर उपाय न ठेवता समायोजित व देखभाल करता येणारी सावली वापरा.",
+    "materials": [
+      "Adjustable shading",
+      "Low-glare task lighting",
+      "Durable easy-clean work surface"
+    ],
+    "materials_mr": [
+      "समायोजित करता येणारी सावली",
+      "कमी झगमगाटाचे कामाचे दिवे",
+      "टिकाऊ व सहज स्वच्छ होणारा कामाचा पृष्ठभाग"
+    ],
+    "queries": [
+      "daylight glare control office architecture",
+      "study desk window shading interior",
+      "office window blind daylight workspace",
+      "natural light office workstation architecture"
+    ]
+  },
+  {
+    "type": "Small urban public seating",
+    "headline": "A GOOD PAUSE NEEDS SHADE",
+    "mr": "थांबण्यासाठी सावली हवी",
+    "idea": "A small public seating pocket positioned around shade, visibility and an unobstructed pedestrian path.",
+    "idea_mr": "सावली, स्पष्ट दृश्ये आणि पादचारी मार्ग मोकळा ठेवून तयार केलेली छोटी सार्वजनिक बसण्याची जागा.",
+    "comfort": "Place seating where people can pause without blocking movement.",
+    "comfort_mr": "लोकांना थांबता येईल पण ये-जा अडणार नाही अशी आसन-जागा ठेवा.",
+    "life": "Select robust furniture with fixings that can be inspected and replaced.",
+    "life_mr": "तपासता आणि बदलता येतील असे जोड असलेले मजबूत फर्निचर निवडा.",
+    "materials": [
+      "Weather-suited public seating",
+      "Repairable fixings",
+      "Slip-resistant paving"
+    ],
+    "materials_mr": [
+      "हवामानाला अनुरूप सार्वजनिक आसन",
+      "दुरुस्त करता येणारे जोड",
+      "न घसरणारे पॅव्हिंग"
+    ],
+    "queries": [
+      "small urban public seating shade architecture",
+      "public seating pocket park design",
+      "shaded street bench landscape architecture",
+      "urban public space durable furniture detail"
+    ]
   }
 ]
