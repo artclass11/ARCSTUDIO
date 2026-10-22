@@ -1,0 +1,299 @@
+[
+  {
+    "type": "Rooftop apartment",
+    "headline": "GIVE WATER A WAY OUT",
+    "mr": "पाण्याला बाहेर जाण्याचा मार्ग द्या",
+    "idea": "A rooftop apartment where rainwater routes are planned before finishes are selected.",
+    "idea_mr": "फिनिश निवडण्याआधीच पावसाच्या पाण्याचा मार्ग ठरवलेले छतावरील घर.",
+    "comfort": "Shade exposed rooms and protect rooftop openings.",
+    "comfort_mr": "उघड्या खोल्यांना सावली द्या आणि छतावरील उघड्या जागांचे संरक्षण करा.",
+    "life": "Keep drains visible, reachable and easy to clear.",
+    "life_mr": "ड्रेनेज दिसेल, सहज पोहोचता येईल आणि स्वच्छ करता येईल असे ठेवा.",
+    "materials": [
+      "Roof finish rated for exposure",
+      "Accessible drain outlets",
+      "Replaceable waterproofing protection layers"
+    ],
+    "materials_mr": [
+      "हवामानाला अनुरूप छताचा फिनिश",
+      "सहज तपासता येणारे ड्रेन आउटलेट्स",
+      "बदलता येणारे वॉटरप्रूफिंग संरक्षण थर"
+    ],
+    "queries": [
+      "rooftop apartment architecture",
+      "roof terrace shading building",
+      "rooftop building entrance stair",
+      "roof waterproofing drainage detail architecture"
+    ]
+  },
+  {
+    "type": "Public library",
+    "headline": "MAKE QUIET SPACE FEEL OPEN",
+    "mr": "शांत जागा मोकळी ठेवा",
+    "idea": "A neighbourhood library organised around daylight, short routes and flexible reading areas.",
+    "idea_mr": "नैसर्गिक प्रकाश, कमी अंतराचे मार्ग आणि बदलता वाचन-वापर असलेले वाचनालय.",
+    "comfort": "Use filtered daylight where people read for long periods.",
+    "comfort_mr": "दीर्घकाळ वाचनासाठी नियंत्रित नैसर्गिक प्रकाश वापरा.",
+    "life": "Use robust shelves and fittings that can be replaced individually.",
+    "life_mr": "वेगवेगळे बदलता येतील अशी टिकाऊ शेल्फ आणि फिटिंग्स निवडा.",
+    "materials": [
+      "Durable low-glare floor",
+      "Repairable shelving system",
+      "Shading suited to window orientation"
+    ],
+    "materials_mr": [
+      "झगमगाट कमी करणारा टिकाऊ मजला",
+      "दुरुस्त करता येणारी शेल्फ प्रणाली",
+      "खिडकीच्या दिशेनुसार सावली"
+    ],
+    "queries": [
+      "public library architecture daylight",
+      "library reading room architecture",
+      "library entrance building architecture",
+      "durable shelving flooring architecture"
+    ]
+  },
+  {
+    "type": "West-facing home",
+    "headline": "DESIGN FOR THE HOT AFTERNOON",
+    "mr": "दुपारच्या उन्हाचा आधी विचार करा",
+    "idea": "A home layout that gives western sun a buffer before it reaches daily rooms.",
+    "idea_mr": "पश्चिमेकडील सूर्यप्रकाश मुख्य खोल्यांपर्यंत पोहोचण्याआधी अडवणारा घराचा आराखडा.",
+    "comfort": "Place storage, stairs or shaded verandas on the hotter edge where feasible.",
+    "comfort_mr": "शक्य असल्यास उष्ण बाजूला साठवण, जिना किंवा सावलीची ओसरी ठेवा.",
+    "life": "Choose exterior details that can be inspected and repaired safely.",
+    "life_mr": "सुरक्षितपणे तपासता व दुरुस्त करता येतील असे बाह्य तपशील निवडा.",
+    "materials": [
+      "Sun-appropriate external shading",
+      "Site-suitable masonry",
+      "Accessible rainwater and facade details"
+    ],
+    "materials_mr": [
+      "सूर्याच्या दिशेला अनुरूप बाह्य सावली",
+      "जागेला अनुरूप बांधकाम साहित्य",
+      "सहज तपासता येणारे निचरा व फसाड तपशील"
+    ],
+    "queries": [
+      "west facing house architecture shading",
+      "residential external louvers facade",
+      "shaded veranda house exterior",
+      "masonry facade repairable detail"
+    ]
+  },
+  {
+    "type": "Small retail frontage",
+    "headline": "THE EDGE IS PART OF THE SHOP",
+    "mr": "दुकानाची बाहेरील जागाही महत्त्वाची",
+    "idea": "A shopfront with a shaded threshold for browsing, waiting and clear entry.",
+    "idea_mr": "पाहणी, प्रतीक्षा आणि स्पष्ट प्रवेशासाठी सावलीची उंबरठा-जागा असलेले दुकान.",
+    "comfort": "Make the transition from street to interior comfortable and direct.",
+    "comfort_mr": "रस्ता ते आतील जागा हा बदल सोयीचा आणि सरळ ठेवा.",
+    "life": "Keep signage, lights and shutters accessible for routine service.",
+    "life_mr": "नियमित देखभालीसाठी बोर्ड, दिवे आणि शटर सहज पोहोचता येतील असे ठेवा.",
+    "materials": [
+      "Durable shopfront frame",
+      "Easy-clean threshold flooring",
+      "Standard replaceable lighting and shutter parts"
+    ],
+    "materials_mr": [
+      "टिकाऊ दुकान-फ्रेम",
+      "सहज स्वच्छ होणारा प्रवेश-मजला",
+      "बदलता येणारे स्टँडर्ड दिवे व शटरचे भाग"
+    ],
+    "queries": [
+      "small retail shopfront architecture",
+      "shaded shop entrance urban building",
+      "retail facade shutter detail",
+      "shopfront frame flooring detail"
+    ]
+  },
+  {
+    "type": "Heritage guesthouse",
+    "headline": "KEEP THE CHARACTER. FIX THE CAUSE.",
+    "mr": "वैशिष्ट्य जपा. मूळ समस्या सोडवा.",
+    "idea": "A guesthouse retrofit that protects useful existing fabric while correcting water and comfort problems.",
+    "idea_mr": "विद्यमान बांधकाम जपत पाणी आणि आरामाच्या समस्या सोडवणारे गेस्टहाऊस नूतनीकरण.",
+    "comfort": "Improve shade and airflow before adding energy-intensive systems.",
+    "comfort_mr": "ऊर्जा-जास्त वापरणाऱ्या प्रणाली आधी सावली आणि वायुवीजन सुधारा.",
+    "life": "Match repair materials to the existing substrate after expert inspection.",
+    "life_mr": "तज्ज्ञ तपासणीनंतर जुन्या पृष्ठभागाशी सुसंगत दुरुस्ती साहित्य निवडा.",
+    "materials": [
+      "Compatible repair mortar",
+      "Repairable timber or metal joinery",
+      "Moisture control matched to the wall type"
+    ],
+    "materials_mr": [
+      "सुसंगत दुरुस्ती मोर्टार",
+      "दुरुस्त करता येणारे लाकूड किंवा धातूचे जॉइनरी",
+      "भिंतीच्या प्रकाराला अनुरूप ओलावा-नियंत्रण"
+    ],
+    "queries": [
+      "heritage guesthouse restored architecture",
+      "historic building shaded courtyard",
+      "heritage building entrance details",
+      "historic masonry repair mortar detail"
+    ]
+  },
+  {
+    "type": "Warehouse-to-studio reuse",
+    "headline": "USE THE VOLUME YOU HAVE",
+    "mr": "उपलब्ध जागेचा उपयोग करा",
+    "idea": "A tall existing shell reworked as a studio instead of replacing the whole building.",
+    "idea_mr": "संपूर्ण इमारत बदलण्याऐवजी उंच विद्यमान जागेचे स्टुडिओमध्ये रूपांतर.",
+    "comfort": "Bring controlled daylight into the deep plan.",
+    "comfort_mr": "खोल आराखड्यात नियंत्रित नैसर्गिक प्रकाश आणा.",
+    "life": "Keep structure, services and new partitions independently accessible.",
+    "life_mr": "संरचना, सेवा आणि नवीन पार्टिशन्स स्वतंत्रपणे तपासता येतील असे ठेवा.",
+    "materials": [
+      "Existing structure after engineer inspection",
+      "Modular partitions",
+      "Accessible lighting and service tracks"
+    ],
+    "materials_mr": [
+      "अभियंता तपासणीनंतर विद्यमान संरचना",
+      "मॉड्युलर पार्टिशन्स",
+      "सहज तपासता येणारे दिवे व सेवा-ट्रॅक"
+    ],
+    "queries": [
+      "warehouse converted studio architecture",
+      "industrial adaptive reuse interior",
+      "warehouse entrance facade renovation",
+      "modular partition industrial building detail"
+    ]
+  },
+  {
+    "type": "Coastal home",
+    "headline": "LET THE WEATHER SET THE RULES",
+    "mr": "हवामानानुसार रचना ठरवा",
+    "idea": "A coastal home with protected openings, corrosion-aware components and a clear drainage path.",
+    "idea_mr": "संरक्षित उघड्या जागा, गंजाचा विचार आणि स्पष्ट निचरा असलेले किनारी घर.",
+    "comfort": "Use shade and cross-breezes where site conditions support them.",
+    "comfort_mr": "जागेच्या परिस्थितीनुसार सावली आणि आरपार वारा वापरा.",
+    "life": "Specify corrosion-resistant hardware suited to the exposure.",
+    "life_mr": "हवामानाच्या संपर्काला अनुरूप गंज-प्रतिरोधक हार्डवेअर निवडा.",
+    "materials": [
+      "Site-rated corrosion-resistant fasteners",
+      "Exterior finish for marine exposure",
+      "Serviceable rainwater outlets"
+    ],
+    "materials_mr": [
+      "किनारी वातावरणाला अनुरूप गंज-प्रतिरोधक फास्टनर्स",
+      "समुद्री हवामानासाठी बाह्य फिनिश",
+      "दुरुस्त करता येणारे निचरा आउटलेट्स"
+    ],
+    "queries": [
+      "coastal house architecture exterior",
+      "tropical coastal house shading",
+      "coastal home entrance canopy",
+      "corrosion resistant building hardware detail"
+    ]
+  },
+  {
+    "type": "Market hall",
+    "headline": "KEEP THE SERVICE ROUTE OUT OF THE WAY",
+    "mr": "सेवेचा मार्ग वेगळा ठेवा",
+    "idea": "A compact market hall where deliveries, visitors and waste routes do not conflict.",
+    "idea_mr": "साहित्य-वितरण, ग्राहक आणि कचऱ्याचे मार्ग एकमेकांत अडथळा आणत नाहीत असे मार्केट हॉल.",
+    "comfort": "Separate visitor movement from service circulation.",
+    "comfort_mr": "ग्राहकांची हालचाल आणि सेवा-मार्ग वेगळे ठेवा.",
+    "life": "Choose washable surfaces and access to drains and equipment.",
+    "life_mr": "सहज स्वच्छ होणारे पृष्ठभाग आणि ड्रेन व उपकरणांपर्यंत पोहोच ठेवा.",
+    "materials": [
+      "Washable durable floor",
+      "Serviceable drainage channels",
+      "Standard replaceable stall modules"
+    ],
+    "materials_mr": [
+      "सहज धुता येणारा टिकाऊ मजला",
+      "दुरुस्त करता येणारे ड्रेनेज चॅनेल",
+      "बदलता येणारे स्टॉल मॉड्यूल्स"
+    ],
+    "queries": [
+      "market hall architecture interior",
+      "covered public market building",
+      "market hall entrance delivery design",
+      "market hall drainage flooring detail"
+    ]
+  },
+  {
+    "type": "Flood-aware house",
+    "headline": "KEEP THE CRITICAL PARTS DRY",
+    "mr": "महत्त्वाचे भाग कोरडे ठेवा",
+    "idea": "A site-specific home concept that keeps essential services away from likely water paths.",
+    "idea_mr": "पाण्याच्या संभाव्य प्रवाहापासून महत्त्वाच्या सेवांना दूर ठेवणारी जागेनुसार घराची कल्पना.",
+    "comfort": "Map the site drainage before fixing the floor level.",
+    "comfort_mr": "मजल्याची उंची ठरवण्याआधी जागेचा निचरा समजून घ्या.",
+    "life": "Never guess flood levels; use local hazard data and engineering advice.",
+    "life_mr": "पूराची पातळी अंदाजाने ठरवू नका; स्थानिक धोका-माहिती आणि अभियंत्याचा सल्ला घ्या.",
+    "materials": [
+      "Water-compatible ground-floor finish",
+      "Protected electrical service locations",
+      "Repairable exterior wall system"
+    ],
+    "materials_mr": [
+      "पाण्याच्या संपर्काला अनुरूप तळमजल्याचा फिनिश",
+      "संरक्षित विद्युत सेवा-जागा",
+      "दुरुस्त करता येणारी बाह्य भिंत प्रणाली"
+    ],
+    "queries": [
+      "flood resilient house architecture",
+      "raised residential entrance flood design",
+      "flood adaptive building detail",
+      "water resistant exterior building materials"
+    ]
+  },
+  {
+    "type": "Garden-facing home",
+    "headline": "PUT GREEN WHERE IT HELPS",
+    "mr": "हिरवळ योग्य ठिकाणी वापरा",
+    "idea": "A home that places planting where it can shade useful space without blocking maintenance.",
+    "idea_mr": "देखभाल अडवू न देता उपयोगी जागेला सावली देणारी हिरवळ असलेले घर.",
+    "comfort": "Use planting to support shade, privacy and outdoor use.",
+    "comfort_mr": "सावली, गोपनीयता आणि बाहेरील वापरासाठी हिरवळ नियोजित करा.",
+    "life": "Leave access for pruning, waterproofing checks and drain cleaning.",
+    "life_mr": "छाटणी, वॉटरप्रूफिंग तपासणी आणि ड्रेन स्वच्छतेसाठी प्रवेश ठेवा.",
+    "materials": [
+      "Region-appropriate planting",
+      "Accessible planters with drainage",
+      "Repairable paving edges"
+    ],
+    "materials_mr": [
+      "प्रदेशाला अनुरूप झाडे",
+      "निचरा असलेले सहज पोहोचता येणारे प्लांटर्स",
+      "दुरुस्त करता येणारे पॅव्हिंग कडे"
+    ],
+    "queries": [
+      "garden facing modern house architecture",
+      "house courtyard planting shade",
+      "residential planter drainage architecture",
+      "landscape paving edge detail"
+    ]
+  },
+  {
+    "type": "Workshop building",
+    "headline": "MAKE THE WORKFLOW THE PLAN",
+    "mr": "कामाच्या प्रवाहानुसार आराखडा",
+    "idea": "A compact workshop where material movement, daylight and safe exits shape the layout.",
+    "idea_mr": "साहित्याची हालचाल, नैसर्गिक प्रकाश आणि सुरक्षित बाहेर पडण्याचे मार्ग ठरवणारी कार्यशाळा.",
+    "comfort": "Place task lighting where work happens, not everywhere.",
+    "comfort_mr": "काम जिथे होते तिथेच योग्य प्रकाश नियोजित करा.",
+    "life": "Keep equipment clearance, service access and exit paths unobstructed.",
+    "life_mr": "उपकरणांची मोकळीक, देखभाल प्रवेश आणि बाहेर पडण्याचे मार्ग अडवू नका.",
+    "materials": [
+      "Impact-resistant cleanable floor",
+      "Repairable wall protection",
+      "Standard modular service fittings"
+    ],
+    "materials_mr": [
+      "धक्का सहन करणारा स्वच्छ करता येणारा मजला",
+      "दुरुस्त करता येणारे भिंत-संरक्षण",
+      "स्टँडर्ड मॉड्युलर सेवा फिटिंग्स"
+    ],
+    "queries": [
+      "small workshop architecture daylight",
+      "maker studio workshop building",
+      "workshop entrance industrial architecture",
+      "workshop durable flooring wall protection"
+    ]
+  }
+]
