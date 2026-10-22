@@ -46,7 +46,7 @@ jobs:
         run: |
           git config user.name "ARCSTUDIO91 Daily Publisher"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/current data/image_history.json
+          git add output/current data/image_history.json data/concept_history.json
           git commit -m "ARCSTUDIO91 daily carousel $(date -u +%F)" || echo "No asset changes to commit"
           git push origin HEAD:main
           echo "asset_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -57,9 +57,12 @@ jobs:
           name: ARCSTUDIO91-carousel-${{ github.run_id }}
           path: |
             output/current/slide_*.jpg
+            output/current/slide_*.png
+            output/current/preview_contact_sheet.jpg
             output/current/caption.txt
             output/current/sources.json
             output/current/concept.json
+            output/current/research_notes.md
           retention-days: 30
 
       - name: Publish to Instagram and Facebook Page
