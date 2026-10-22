@@ -150,6 +150,17 @@ CONCEPTS: list[dict[str, Any]] = [
     },
 ]
 
+
+# Extra ideas live in a data file so new concepts can be added without rebuilding the renderer.
+EXTRA_IDEAS_PATH = DATA / "extra_ideas.json"
+if EXTRA_IDEAS_PATH.exists():
+    try:
+        extra_ideas = json.loads(EXTRA_IDEAS_PATH.read_text(encoding="utf-8"))
+        if isinstance(extra_ideas, list):
+            CONCEPTS.extend(extra_ideas)
+    except (OSError, ValueError) as exc:
+        print(f"Could not load extra idea file: {exc}")
+
 GENERIC_QUERIES = [
     "modern architecture building exterior photograph",
     "shaded outdoor architecture building",
