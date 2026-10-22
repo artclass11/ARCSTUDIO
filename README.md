@@ -5,13 +5,16 @@ Free daily architecture-carousel workflow for @arcstudio91. It uses Python/Pillo
 ## Daily behaviour
 
 - Runs around 08:07 India time (02:37 UTC).
-- Rotates original ARCSTUDIO91 architecture concepts across homes, offices, resorts, cafés, commercial projects, adaptive reuse and public spaces.
+- Rotates original concepts across 10 editorial pillars: design studies; climate-wise living; space planning; durability and repairability; people-first places; adaptive reuse; interiors and sensory design; landscape and water; architecture explainers; and design decision stories.
+- Includes residential, apartment, villa, office, healthcare, education, hospitality, retail, public-space, landscape and retrofit typologies, plus practical lessons on wayfinding, acoustics, daylight, maintenance, materials and water.
+- Records concept date, pillar, headline, core insight and visual motif in `data/concept_history.json`; the selector avoids recently used concepts for up to 30 prior entries when alternatives exist.
+- Caption tone aims for useful, save-worthy education and one natural discussion prompt—not clickbait, fake project claims or hashtag stuffing.
 - Uses Wikimedia Commons photographs only when a reusable licence is verifiable, and includes attribution in the bilingual caption.
 - Creates four distinct slides, not a collage. Images are full-bleed, text is minimal, and phone details appear only on slide 4.
 - Commits images to this public repo so Meta can fetch them over HTTPS.
 - Publishes an Instagram carousel and a Facebook Page multi-photo post only when explicitly enabled.
 - Tracks publish state and refuses automatic retries after an ambiguous publish response.
-- Uses free tools only. No paid image credits, Metricool or Windsor.ai.
+- Uses free tools only. No paid image credits, Metricool or Windsor.ai. The daily workflow is scheduled for approximately 08:07 India time; generation is separate from actual platform publishing.
 
 Reference photos are inspirational examples and are not represented as completed ARCSTUDIO91 projects. If suitable licensed images are unavailable, generation fails safely and no post is published.
 
