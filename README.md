@@ -10,7 +10,8 @@ Free daily architecture-carousel workflow for @arcstudio91. It uses Python/Pillo
 - Records concept date, pillar, headline, core insight and visual motif in `data/concept_history.json`; the selector avoids recently used concepts for up to 30 prior entries when alternatives exist.
 - Caption tone aims for useful, save-worthy education and one natural discussion prompt—not clickbait, fake project claims or hashtag stuffing.
 - Uses Wikimedia Commons photographs only when a reusable licence is verifiable, and includes attribution in the bilingual caption.
-- Creates four distinct slides, not a collage. Images are full-bleed, text is minimal, and phone details appear only on slide 4.
+- Creates exactly four separate 1080×1350 JPG slides plus PNG masters and a review-only contact sheet (never a publishable 2×2 collage). Images are full-bleed, text is minimal, and phone details appear only on slide 4.
+- Adds a varied, date-rotated discussion prompt to the caption and generates source/licence notes plus a quality manifest for review.
 - Commits images to this public repo so Meta can fetch them over HTTPS.
 - Publishes an Instagram carousel and a Facebook Page multi-photo post only when explicitly enabled.
 - Tracks publish state and refuses automatic retries after an ambiguous publish response.
