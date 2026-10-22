@@ -43,3 +43,39 @@ If image generation is rate-limited or unavailable, do not retry repeatedly and 
 - Never place tokens, passwords, cookies, or secrets in source files, commits, logs, captions, or chat.
 - Keep auto-publishing disabled until the user has intentionally configured and verified the correct Meta Page and Instagram account.
 - Record platform confirmation/IDs and verify the live post. If the result is ambiguous, mark for review and inspect the platform before retrying.
+
+
+## Premium editorial direction
+Treat the account like a thoughtful architecture journal, not a property-advertising feed. Each daily carousel should teach one memorable thing, show a distinct architectural idea, and make a reader want to save or share it. Keep the visuals restrained and warm: natural materials, clear geometry, daylight, honest textures, generous negative space, strong hierarchy, no luxury clichés.
+
+### Rotate content pillars
+Rotate broadly across these pillars rather than posting the same building type every day:
+1. **Original design studies:** homes, compact apartments, villas, offices, hospitality, retail and mixed-use.
+2. **Climate-wise living:** shade, daylight, cross-ventilation, monsoon drainage, heat, orientation and local landscape.
+3. **Space that works:** circulation, storage, privacy, accessibility, flexible rooms, service routes and small-space planning.
+4. **Durability and care:** repairability, water protection, maintainable facades, replaceable parts, cleaning, safe inspection access and sensible material choices.
+5. **People-first places:** clinics, learning spaces, libraries, public seating, community pavilions and inclusive access.
+6. **Reuse and regeneration:** adaptive reuse, existing-building audits, retained materials, retrofit sequencing and landscape restoration.
+7. **Interiors and sensory design:** acoustics, glare, visual calm, tactile materials, wayfinding and furniture layout.
+8. **Landscape and water:** native planting where appropriate, shade trees, permeable surfaces, rain gardens and responsible water management.
+9. **Architecture explained:** one myth vs fact, one drawing explained, one site-planning question, one material comparison, or a “what to check before you build” checklist.
+10. **Behind the decisions:** concept rationale, trade-offs, cost-aware priorities and the questions an architect asks before choosing a detail. Never invent a client, completed project, budget, performance result or site condition.
+
+### Engagement without clickbait
+- Use a specific, useful opening idea instead of generic slogans. Headlines should create curiosity while telling the reader what they will learn.
+- Keep one idea per slide. Prefer concrete verbs and short sentences over vague words such as premium, revolutionary or perfect.
+- Provide a clear save-worthy takeaway: a useful question, a design check, a simple comparison or a practical trade-off.
+- Use a natural Marathi + English caption, not literal word-for-word translation if that sounds awkward. End with one relevant, non-pushy prompt such as “Which would matter most in your space: shade, privacy or easy maintenance?”
+- Use only a small number of relevant hashtags; do not stuff captions with broad unrelated tags.
+- Never use fear-mongering, unsupported environmental claims, invented statistics, guaranteed savings, guaranteed lifespans or promises of a 100-year building.
+- When discussing costs, safety, structure, fire, waterproofing, accessibility or local regulations, label the content as general education and defer site-specific decisions to qualified local professionals.
+
+### Daily freshness and editorial review
+- Keep a concept history with date, pillar, typology, headline, key insight and visual motif. Before generating the next post, avoid repeating the last 30 topics and the last 10 headline patterns when alternatives exist.
+- Review recent output images and captions for visual repetition, legibility, useful contrast, natural-looking imagery, Marathi font shaping, attribution, and correct contact placement.
+- Vary camera/diagram language across days: context view, threshold detail, plan-like schematic, shaded section, material close-up, landscape edge or spatial sequence. Never use the same layout as a template every day without a reason.
+- Every post should look intentional as a set, but visual consistency must come from typography, spacing and palette—not from repeating the same composition.
+- Label concept sketches/renders as concepts and stock/reference photography as reference imagery. Never imply that illustrative content is a completed ARCSTUDIO91 project.
+
+## Daily carousel publishing package
+By default, produce four 1080×1350 slides as separate JPGs and PNG masters plus a review contact sheet, bilingual caption and source/quality notes. Keep contact details only at the top of slide 4. Build the asset package even when publishing is unavailable; publishing status must remain explicit and truthful.
