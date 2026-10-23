@@ -255,6 +255,11 @@ def main() -> None:
     # Photo sources are transient: package contains final Reel and licence notes, not duplicate source files.
     photo_paths = [OUT / f"_reel_source_{i:02d}.jpg" for i in range(1, 5)]
     available = [p for p in photo_paths if p.exists()]
+    if concept.get("visual_mode") != "locally generated open-weight AI concept artwork" or len(available) != 4:
+        raise RuntimeError(
+            "Strict free-AI mode: the Reel requires four same-day locally AI-generated visual sources. "
+            "Run scripts/generate_free_ai_pack.py first; no drawing, stock-photo or paid fallback is permitted."
+        )
     title = concept.get("headline_mr") or concept.get("mr") or "आजचा वास्तु-विचार"
     idea = concept.get("idea_mr") or concept.get("original_idea") or "जागेचा विचार करून वापर अधिक सोपा करा."
     comfort = concept.get("comfort_mr") or "प्रकाश, सावली आणि हालचालीचे मार्ग लक्षात घ्या."
