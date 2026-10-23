@@ -48,9 +48,17 @@ def find_font(bold: bool = False) -> str:
 
 FONT_REGULAR = find_font(False)
 FONT_BOLD = find_font(True)
+LATIN_REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+LATIN_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 def font(size: int, bold: bool = False):
     return ImageFont.truetype(FONT_BOLD if bold else FONT_REGULAR, size=size)
+
+def latin_font(size: int, bold: bool = False):
+    path = LATIN_BOLD if bold else LATIN_REGULAR
+    if not Path(path).exists():
+        return font(size, bold)
+    return ImageFont.truetype(path, size=size)
 
 def wrap_lines(draw: ImageDraw.ImageDraw, text: str, fnt, max_width: int) -> list[str]:
     lines: list[str] = []
@@ -115,7 +123,7 @@ def draw_floorplan(draw: ImageDraw.ImageDraw, scene_no: int) -> None:
     # Legend
     draw.ellipse((142, 1490, 170, 1518), fill=SAGE)
     draw.text((190, 1481), "हालचालीचा मोकळा मार्ग", font=font(27, True), fill=INK)
-    draw.text((140, 1550), "Concept diagram • site-specific planning required", font=font(19), fill=MUTED)
+    draw.text((140, 1550), "संकल्पना; बांधकामासाठी नाही", font=font(23), fill=MUTED)
 
 def make_scene(photo_path: Path | None, concept: dict[str, Any], scene_no: int,
                title: str, message: str, detail: str = "") -> Path:
@@ -144,7 +152,7 @@ def make_scene(photo_path: Path | None, concept: dict[str, Any], scene_no: int,
 
     draw = ImageDraw.Draw(image)
     # Stable editorial frame and readable text.
-    draw.text((64, 42), "@arcstudio91", font=font(29, True), fill=INK)
+    draw.text((64, 42), "@arcstudio91", font=latin_font(29, True), fill=INK)
     meta = f"वास्तु-विचार   {scene_no:02d} / 05"
     mb = draw.textbbox((0, 0), meta, font=font(21))
     draw.text((W - 64 - (mb[2] - mb[0]), 49), meta, font=font(21), fill=MUTED)
@@ -163,7 +171,7 @@ def make_scene(photo_path: Path | None, concept: dict[str, Any], scene_no: int,
     if detail:
         write_wrapped(draw, detail, (64, 1835), font(25), MUTED, W - 128, gap=4, max_lines=2)
     if scene_no == SCENE_COUNT:
-        draw.text((64, 1881), "आर्किटेक्चर • इंटिरियर • स्पेस प्लॅनिंग", font=font(19, True), fill=INK)
+        draw.text((64, 1881), "आर्किटेक्चर / इंटिरियर / स्पेस प्लॅनिंग", font=font(19, True), fill=INK)
     target = OUT / f"reel_scene_{scene_no:02d}.png"
     image.save(target, format="PNG", optimize=True)
     return target
