@@ -122,9 +122,6 @@ def main() -> None:
     print(f"Validated {len(package_files)} content files.")
     print(f"Reel: {video_meta['width']}×{video_meta['height']} / {video_meta['duration_seconds']}s.")
     print(f"Daily pack ready in {OUT}. GitHub Actions will bundle this directory as one download artifact.")
-    print(f"Validated {len(package_files)} content files.")
-    print(f"Reel: {video_meta['width']}×{video_meta['height']} / {video_meta['duration_seconds']}s.")
-    print(f"Package: {archive_path} ({archive_path.stat().st_size:,} bytes)")
 
 if __name__ == "__main__":
     main()
