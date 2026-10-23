@@ -25,6 +25,8 @@ if ($LASTEXITCODE -ne 0) {
     throw "GitHub CLI is not signed in. Run 'gh auth login' in a terminal and then retry."
 }
 $RepoRoot = Split-Path -Parent $PSScriptRoot
+$VenvPython = Join-Path $RepoRoot ".venv-ai\Scripts\python.exe"
+if (-not (Test-Path $VenvPython)) { $VenvPython = (Get-Command python -ErrorAction Stop).Source }
 & git -C $RepoRoot pull --ff-only
 if ($LASTEXITCODE -ne 0) {
     throw "Could not update the ARCSTUDIO scripts. Ensure the cloned repo is clean, then run git pull --ff-only."
@@ -110,15 +112,15 @@ foreach ($run in $runs) {
         $env:ARCSTUDIO_OUTPUT_DIR = $stagePack
         try {
             Push-Location $RepoRoot
-            & python -c "import torch, diffusers; assert torch.cuda.is_available(), 'No CUDA GPU available'"
+            & $VenvPython -c "import torch, diffusers; assert torch.cuda.is_available(), 'No CUDA GPU available'"
             if ($LASTEXITCODE -ne 0) {
                 throw "Free local AI setup is incomplete. Install CUDA-enabled PyTorch and requirements-ai.txt; no paid fallback is permitted."
             }
-            & python scripts/generate_free_ai_pack.py
+            & $VenvPython scripts/generate_free_ai_pack.py
             if ($LASTEXITCODE -ne 0) { throw "Local FLUX.1-schnell artwork generation failed; no pack marked ready." }
-            & python scripts/generate_reel.py
+            & $VenvPython scripts/generate_reel.py
             if ($LASTEXITCODE -ne 0) { throw "Marathi-first Reel rendering failed; no pack marked ready." }
-            & python scripts/package_daily.py
+            & $VenvPython scripts/package_daily.py
             if ($LASTEXITCODE -ne 0) { throw "Final AI package quality checks failed; no pack marked ready." }
         }
         finally {
