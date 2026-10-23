@@ -278,20 +278,20 @@ def main() -> None:
     (OUT / "reel_script_marathi.txt").write_text("\n\n".join(narration) + "\n", encoding="utf-8")
     build_subtitles(scene_data, OUT / "reel_subtitles_mr.srt")
     (OUT / "reel_caption.txt").write_text(
-        f"जागेची चांगली रचना म्हणजे फक्त दिसणं नाही—रोजचा वापर सहज होणंही महत्त्वाचं.\\n\\n"
-        f"{idea} {comfort} {life}\\n\\n"
+        f"जागेची चांगली रचना म्हणजे फक्त दिसणं नाही—रोजचा वापर सहज होणंही महत्त्वाचं.\n\n"
+        f"{idea} {comfort} {life}\n\n"
         "सेवा: निवासी व व्यावसायिक आर्किटेक्चर • रिसॉर्ट/हॉटेल/कॅफे • इंटिरियर व स्पेस प्लॅनिंग • "
-        "शाश्वत डिझाइन • नूतनीकरण व adaptive reuse • साहित्य मार्गदर्शन.\\n\\n"
-        "तुमच्या जागेत काय आधी सुधारणार—प्रकाश, गोपनीयता की देखभाल?\\n"
-        "General educational concept only; project-specific decisions need qualified local review.\\n"
-        "#ARCSTUDIO91 #ArchitectureMarathi #SustainableDesign #SpacePlanning\\n",
+        "शाश्वत डिझाइन • नूतनीकरण व adaptive reuse • साहित्य मार्गदर्शन.\n\n"
+        "तुमच्या जागेत काय आधी सुधारणार—प्रकाश, गोपनीयता की देखभाल?\n"
+        "General educational concept only; project-specific decisions need qualified local review.\n"
+        "#ARCSTUDIO91 #ArchitectureMarathi #SustainableDesign #SpacePlanning\n",
         encoding="utf-8",
     )
     make_ambient_audio(OUT / "reel_ambient.wav", DURATION)
 
     ffmpeg_cmd = ["ffmpeg", "-y"]
     for path in scenes:
-        ffmpeg_cmd.extend(["-loop", "1", "-t", str(SCENE_SECONDS), "-i", str(path)])
+        ffmpeg_cmd.extend(["-framerate", str(FPS), "-loop", "1", "-t", str(SCENE_SECONDS), "-i", str(path)])
     ffmpeg_cmd.extend(["-i", str(OUT / "reel_ambient.wav")])
     filters = []
     for i in range(SCENE_COUNT):
@@ -326,6 +326,22 @@ def main() -> None:
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     if proc.returncode:
         raise RuntimeError("FFmpeg Reel render failed: " + (proc.stderr or proc.stdout)[-3000:])
+
+    # Validate the actual MP4 stream before marking the Reel as ready.
+    if not shutil.which("ffprobe"):
+        raise RuntimeError("ffprobe is required for Reel validation.")
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height,r_frame_rate",
+         "-show_entries", "format=duration", "-of", "json", str(OUT / "reel.mp4")],
+        capture_output=True, text=True, check=True, timeout=30
+    )
+    probe_data = json.loads(probe.stdout)
+    video_stream = next((stream for stream in probe_data.get("streams", []) if stream.get("codec_type") == "video"), None)
+    duration = float(probe_data.get("format", {}).get("duration", 0))
+    if not video_stream or video_stream.get("width") != 1080 or video_stream.get("height") != 1920:
+        raise RuntimeError("Reel QA failed: expected 1080×1920 video.")
+    if not (20 <= duration <= 30):
+        raise RuntimeError(f"Reel QA failed: duration {duration:.2f}s is outside 20–30 seconds.")
 
     # Instagram cover uses the clean first scene; retain 1080×1920 for the uploader.
     with Image.open(scenes[0]) as first:
