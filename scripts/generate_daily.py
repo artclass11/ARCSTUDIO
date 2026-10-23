@@ -298,6 +298,55 @@ def crop_to_portrait(data: bytes) -> Image.Image:
         image = ImageOps.exif_transpose(source).convert("RGB")
         return ImageOps.fit(image, SIZE, method=Image.Resampling.LANCZOS, centering=(0.5, 0.45))
 
+
+def original_concept_art(concept: dict[str, Any], variant: int) -> dict[str, Any]:
+    """Make an original diagram-like visual when no suitable licensed photos are available."""
+    import io
+    canvas = Image.new("RGB", SIZE, (224, 222, 212))
+    draw = ImageDraw.Draw(canvas)
+    # Quiet paper texture and fine drafting grid.
+    for x in range(0, SIZE[0], 48):
+        draw.line((x, 0, x, SIZE[1]), fill=(213, 211, 201), width=1)
+    for y in range(0, SIZE[1], 48):
+        draw.line((0, y, SIZE[0], y), fill=(213, 211, 201), width=1)
+    # Original abstract architectural massing; deliberately not a technical plan.
+    ground = (88, 101, 89)
+    wall = (185, 184, 170)
+    dark = (65, 74, 67)
+    sage = (128, 149, 126)
+    shift = (variant - 1) * 24
+    draw.polygon([(105, 610), (515, 365), (950, 570), (535, 825)], fill=(205, 202, 189), outline=dark)
+    draw.polygon([(105, 610), (535, 825), (535, 1080), (105, 865)], fill=wall, outline=dark)
+    draw.polygon([(535, 825), (950, 570), (950, 825), (535, 1080)], fill=(157, 160, 145), outline=dark)
+    # Openings and shaded threshold vary by slide.
+    draw.polygon([(185, 640), (300, 705), (300, 835), (185, 770)], fill=(55, 75, 69), outline=dark)
+    draw.polygon([(370, 744), (455, 793), (455, 924), (370, 875)], fill=(92, 110, 99), outline=dark)
+    draw.polygon([(600, 850), (730, 775), (730, 895), (600, 970)], fill=(59, 78, 70), outline=dark)
+    draw.polygon([(770, 750), (880, 685), (880, 755), (770, 820)], fill=(212, 208, 192), outline=dark)
+    if variant % 2:
+        draw.polygon([(110, 575), (535, 325), (972, 548), (940, 569), (535, 375), (140, 614)], fill=(73, 84, 74))
+    else:
+        draw.polygon([(95, 584), (535, 330), (980, 546), (950, 568), (535, 377), (126, 616)], fill=(110, 126, 105))
+    # Landscape / circulation line to reinforce the practical design lens.
+    draw.line((120 + shift, 1170, 440, 1170, 600, 1270, 950, 1270), fill=sage, width=18)
+    for px in (190 + shift, 295 + shift, 865 - shift):
+        draw.ellipse((px - 22, 1125, px + 22, 1169), fill=(117, 139, 104))
+        draw.ellipse((px - 31, 1090, px + 10, 1133), fill=(138, 156, 126))
+    draw.text((70, 90), "ORIGINAL CONCEPT ART", font=font(20, True), fill=dark)
+    draw.text((70, 1260), "ILLUSTRATIVE STUDY  /  NOT A BUILT PROJECT", font=font(17, True), fill=dark)
+    buffer = io.BytesIO()
+    canvas.save(buffer, format="JPEG", quality=94, optimize=True)
+    return {
+        "title": f"Original ARCSTUDIO91 concept artwork {variant}",
+        "url": "",
+        "bytes": buffer.getvalue(),
+        "license": "Original concept artwork",
+        "license_url": "",
+        "artist": "ARCSTUDIO91 content workflow",
+        "source_page": "Original locally drawn concept illustration; no external photo used",
+        "original_art": True,
+    }
+
 def header(draw: ImageDraw.ImageDraw, index: int, contact: bool = False) -> None:
     top_font = font(28, True)
     small = font(19)
@@ -340,7 +389,8 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
         draw.text((x, y), "SUSTAINABLE DESIGN · RENOVATION", font=font(19, True), fill=muted)
         y += 40
         text_block(draw, "Local materials • verified quality • site-specific details", x, y, font(21), width, muted, 6, 2)
-        draw.text((x, 1280), "PHOTO SOURCES + LICENCES IN CAPTION", font=font(16), fill=muted)
+        footer = "ORIGINAL CONCEPT ART • NOT A BUILT PROJECT" if photo.get("original_art") else "PHOTO SOURCES + LICENCES IN CAPTION"
+        draw.text((x, 1280), footer, font=font(16), fill=muted)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"slide_{index:02d}.jpg"
     png_path = OUT / f"slide_{index:02d}.png"
@@ -393,7 +443,7 @@ def write_research_notes(concept: dict[str, Any], photos: list[dict[str, Any]], 
         f"- Practical comfort lens: {concept['comfort']}",
         f"- Durability/maintenance lens: {concept['life']}",
         "- Scope: general educational design discussion, not construction advice or a site-specific specification.",
-        "- Image status: licensed reference photography; these images are not represented as completed ARCSTUDIO91 projects.",
+        ("- Image status: original concept illustrations; not real project photographs." if all(p.get("original_art") for p in photos) else "- Image status: licensed reference photography with individual credits below; images are not represented as completed ARCSTUDIO91 projects."),
         "- Profile status: the public Instagram profile is only used if accessible; no profile observations are inferred by this generator.",
         "",
         "## Image source, author and licence",
@@ -422,11 +472,15 @@ def make_caption(concept: dict[str, Any], photos: list[dict[str, Any]], today: d
         f"English: {concept['idea']} {concept['comfort']} {concept['life']}\n\n"
         "सेवा: घर व व्यावसायिक आर्किटेक्चर • रिसॉर्ट/कॅफे • इंटिरियर • शाश्वत डिझाइन • नूतनीकरण.\n"
         "Services: Residential & commercial architecture • Resorts/hotels/cafés • Interiors • Sustainable design • Renovation/adaptive reuse • Material guidance.\n"
-        "हे संदर्भ फोटो आहेत; ARCSTUDIO91 चे पूर्ण झालेले प्रकल्प नाहीत. These licensed photos are references, not completed ARCSTUDIO91 projects.\n\n"
-        "Photo credits:\n"
+        + ("हे मूळ संकल्पचित्र आहे; प्रत्यक्ष बांधलेला प्रकल्प नाही. This is original concept artwork, not a real project photo.\n\n"
+           if all(p.get("original_art") for p in photos)
+           else "हे संदर्भ फोटो आहेत; ARCSTUDIO91 चे पूर्ण झालेले प्रकल्प नाहीत. These licensed photos are references, not completed ARCSTUDIO91 projects.\n\n")
     )
-    for i, photo in enumerate(photos, start=1):
-        text += f"{i}. {photo['title'][:60]} — {photo['artist'][:60]} ({photo['license']}); {photo['source_page']}\n"
+    photo_credits = [p for p in photos if not p.get("original_art")]
+    if photo_credits:
+        text += "Photo credits:\n"
+        for i, photo in enumerate(photo_credits, start=1):
+            text += f"{i}. {photo['title'][:60]} — {photo['artist'][:60]} ({photo['license']}); {photo['source_page']}\n"
     question_mr, question_en = ENGAGEMENT_PROMPTS[today.toordinal() % len(ENGAGEMENT_PROMPTS)]
     text += f"\n\n{question_mr}\n{question_en}"
     text += "\n#ARCSTUDIO91 #FunctionalArchitecture #SustainableArchitecture #ClimateResponsiveDesign"
@@ -476,7 +530,18 @@ def main() -> None:
     recent = history.get("images", [])[-80:]
     recent_titles = {entry.get("title") for entry in recent}
     used_today: set[str] = set()
-    photos = [choose_image(query, used_today, recent_titles) for query in concept["queries"]]
+    try:
+        photos = [choose_image(query, used_today, recent_titles) for query in concept["queries"]]
+    except RuntimeError as exc:
+        print(f"Licensed photography unavailable; falling back to original concept artwork: {exc}")
+        photos = [original_concept_art(concept, index) for index in range(1, 5)]
+    # Temporary source-photo copies are used to build today's Reel, then removed by generate_reel.py.
+    OUT.mkdir(parents=True, exist_ok=True)
+    for index, photo in enumerate(photos, start=1):
+        with Image.open(__import__("io").BytesIO(photo["bytes"])) as source:
+            source_image = ImageOps.fit(ImageOps.exif_transpose(source).convert("RGB"), SIZE,
+                                        method=Image.Resampling.LANCZOS, centering=(0.5, 0.45))
+            source_image.save(OUT / f"_reel_source_{index:02d}.jpg", quality=94, optimize=True)
     paths = [render_slide(photo, concept, index) for index, photo in enumerate(photos, start=1)]
     contact_sheet = create_contact_sheet(paths)
     caption = make_caption(concept, photos, today)
@@ -492,8 +557,12 @@ def main() -> None:
     (OUT / "sources.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     (OUT / "concept.json").write_text(json.dumps({
         "date": today.isoformat(), "type": concept["type"], "headline": concept["headline"],
-        "original_idea": concept["idea"], "materials": concept["materials"],
-        "materials_mr": concept["materials_mr"],
+        "headline_mr": concept.get("mr", ""),
+        "original_idea": concept["idea"], "idea_mr": concept["idea_mr"],
+        "comfort": concept["comfort"], "comfort_mr": concept["comfort_mr"],
+        "life": concept["life"], "life_mr": concept["life_mr"],
+        "materials": concept["materials"], "materials_mr": concept["materials_mr"],
+        "visual_mode": "original concept artwork" if all(p.get("original_art") for p in photos) else "licensed reference photography",
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     recent.extend({"date": today.isoformat(), "title": photo["title"]} for photo in photos)
     history["images"] = recent[-80:]
