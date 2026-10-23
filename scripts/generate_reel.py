@@ -26,7 +26,7 @@ FPS = 30
 SCENE_SECONDS = 5.0
 TRANSITION_SECONDS = 0.5
 SCENE_COUNT = 5
-DURATION = SCENE_COUNT * SCENE_SECONDS - (SCENE_COUNT - 1) * TRANSITION_SECONDS
+DURATION = SCENE_COUNT * SCENE_SECONDS
 BG = (22, 27, 25)
 INK = (242, 239, 230)
 SAGE = (160, 177, 153)
@@ -210,7 +210,7 @@ def make_ambient_audio(path: Path, seconds: float) -> None:
 def build_subtitles(scene_data: list[tuple[str, str, str]], path: Path) -> None:
     out = []
     for i, (title, message, detail) in enumerate(scene_data):
-        start = i * (SCENE_SECONDS - TRANSITION_SECONDS)
+        start = i * SCENE_SECONDS
         end = min(DURATION, start + SCENE_SECONDS)
         def ts(x: float) -> str:
             ms = int(round(x * 1000))
@@ -300,15 +300,13 @@ def main() -> None:
             f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps={FPS},"
             f"settb=AVTB,setpts=PTS-STARTPTS,setsar=1,format=yuv420p[v{i}]"
         )
-    previous = "[v0]"
-    for i in range(1, SCENE_COUNT):
-        outlabel = f"[x{i}]"
-        offset = i * (SCENE_SECONDS - TRANSITION_SECONDS)
-        filters.append(
-            f"{previous}[v{i}]xfade=transition=fade:duration={TRANSITION_SECONDS}:"
-            f"offset={offset:.3f}{outlabel}"
-        )
-        previous = outlabel
+    # Use a constant-frame-rate concatenation. This is more robust on GitHub
+    # Actions than xfade on image-backed zoompan streams, which can report 1/0.
+    filters.append(
+        "".join(f"[v{i}]" for i in range(SCENE_COUNT))
+        + f"concat=n={SCENE_COUNT}:v=1:a=0,fade=t=out:st={DURATION - 0.25:.3f}:d=0.25[vout]"
+    )
+    previous = "[vout]"
     filters.append(
         f"[{SCENE_COUNT}:a]atrim=duration={DURATION:.3f},"
         f"afade=t=in:st=0:d=0.8,afade=t=out:st={DURATION-1.5:.3f}:d=1.5,"
