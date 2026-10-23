@@ -166,7 +166,28 @@ foreach ($run in $runs) {
             publish_status = "not published"
         }
         $status | ConvertTo-Json -Depth 4 | Set-Content -Path (Join-Path $target "local_download_status.json") -Encoding UTF8
-        Write-Log "Saved AI-generated, verified content pack for $packDay to $target"
+
+        # Create one convenient ZIP alongside the complete dated folder.
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        $zipPath = Join-Path $Destination ("ARCSTUDIO91_Daily_AI_Pack_" + $packDay + ".zip")
+        if (Test-Path $zipPath) { Remove-Item -Path $zipPath -Force }
+        [System.IO.Compression.ZipFile]::CreateFromDirectory($target, $zipPath, [System.IO.Compression.CompressionLevel]::Optimal, $false)
+        $zip = [System.IO.Compression.ZipFile]::OpenRead($zipPath)
+        try {
+            $zipNames = @($zip.Entries | ForEach-Object { $_.FullName })
+            foreach ($requiredName in @("reel.mp4", "reel_cover.jpg", "reel_caption.txt",
+                                        "slide_01.jpg", "slide_02.jpg", "slide_03.jpg", "slide_04.jpg",
+                                        "ai_generation_manifest.json")) {
+                if ($zipNames -notcontains $requiredName) {
+                    throw "Final daily ZIP is missing $requiredName."
+                }
+            }
+        }
+        finally {
+            $zip.Dispose()
+        }
+        Write-Log "Saved AI-generated, verified folder for $packDay to $target"
+        Write-Log "Created final daily ZIP: $zipPath"
         $downloaded++
     }
     catch {
