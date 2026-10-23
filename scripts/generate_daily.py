@@ -391,16 +391,25 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
         y = text_block(draw, concept["life"], x, 850, latin_font(57, True), width, white, 7, 3)
         text_block(draw, concept["life_mr"], x, y + 18, font(38), width, white, 8, 2)
     else:
-        draw.text((x, 715), "MATERIALS, SIMPLIFIED", font=latin_font(25, True), fill=muted)
-        y = 775
-        for line in concept["materials"]:
-            y = text_block(draw, "— " + line, x, y, latin_font(29), width, white, 7, 2) + 9
-        y += 14
-        draw.text((x, y), "ARCHITECTURE · INTERIORS · HOSPITALITY", font=latin_font(19, True), fill=muted)
-        y += 35
-        draw.text((x, y), "SUSTAINABLE DESIGN · RENOVATION", font=latin_font(19, True), fill=muted)
-        y += 40
-        text_block(draw, "Local materials • verified quality • site-specific details", x, y, latin_font(21), width, muted, 6, 2)
+        draw.text((x, 710), "साहित्य आणि सेवा / MATERIALS & SERVICES", font=font(25, True), fill=muted)
+        y = 765
+        materials_en = concept.get("materials", [])[:3]
+        materials_mr = concept.get("materials_mr", [])
+        for idx, line in enumerate(materials_en):
+            y = text_block(draw, "— " + str(line), x, y, latin_font(24), width, white, 4, 1)
+            if idx < len(materials_mr):
+                y = text_block(draw, str(materials_mr[idx]), x + 12, y + 1, font(22), width - 12, white, 3, 1)
+            y += 8
+        y += 5
+        draw.text((x, y), "आमच्या सेवा / OUR SERVICES", font=font(23, True), fill=muted)
+        y += 38
+        service_lines = [
+            "निवासी व व्यावसायिक आर्किटेक्चर / Residential & commercial",
+            "रिसॉर्ट्स • हॉटेल्स • कॅफे / Resorts • hotels • cafés",
+            "इंटिरियर • शाश्वत डिझाइन • नूतनीकरण • साहित्य मार्गदर्शन",
+        ]
+        for service in service_lines:
+            y = text_block(draw, service, x, y, font(20), width, muted, 3, 1) + 6
         footer = ("AI-GENERATED CONCEPT ART • NOT A BUILT PROJECT" if photo.get("ai_generated")
                   else ("ORIGINAL CONCEPT ART • NOT A BUILT PROJECT" if photo.get("original_art")
                         else "PHOTO SOURCES + LICENCES IN CAPTION"))
