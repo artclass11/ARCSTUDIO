@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = "Stop"
 $Repo = "artclass11/ARCSTUDIO"
 $Workflow = "daily-publish.yml"
-$ArtifactName = "ARCSTUDIO91-Daily-Pack"
+$ArtifactName = "ARCSTUDIO91-Cloud-Source-Pack"
 $LogDir = Join-Path $env:USERPROFILE "Documents\ARCSTUDIO91\logs"
 New-Item -ItemType Directory -Path $Destination -Force | Out-Null
 New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
@@ -23,6 +23,11 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
 & gh auth status --hostname github.com *> $null
 if ($LASTEXITCODE -ne 0) {
     throw "GitHub CLI is not signed in. Run 'gh auth login' in a terminal and then retry."
+}
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+& git -C $RepoRoot pull --ff-only
+if ($LASTEXITCODE -ne 0) {
+    throw "Could not update the ARCSTUDIO scripts. Ensure the cloned repo is clean, then run git pull --ff-only."
 }
 
 $json = & gh run list --repo $Repo --workflow $Workflow --status completed --limit 60 --json databaseId,createdAt,conclusion
@@ -94,17 +99,67 @@ foreach ($run in $runs) {
             continue
         }
 
-        New-Item -ItemType Directory -Path $target -Force | Out-Null
-        Get-ChildItem -Path $payloadRoot -Force | Copy-Item -Destination $target -Recurse -Force
+        # Treat the GitHub artifact as a concept seed only. It is NOT a ready-to-post pack.
+        # Final images and Reel must be rendered locally with the free open-weight model.
+        $stagePack = Join-Path $Destination ($packDay + ".processing")
+        if (Test-Path $stagePack) { Remove-Item -Path $stagePack -Recurse -Force }
+        New-Item -ItemType Directory -Path $stagePack -Force | Out-Null
+        Get-ChildItem -Path $payloadRoot -Force | Copy-Item -Destination $stagePack -Recurse -Force
+
+        $previousOutput = $env:ARCSTUDIO_OUTPUT_DIR
+        $env:ARCSTUDIO_OUTPUT_DIR = $stagePack
+        try {
+            Push-Location $RepoRoot
+            & python -c "import torch, diffusers; assert torch.cuda.is_available(), 'No CUDA GPU available'"
+            if ($LASTEXITCODE -ne 0) {
+                throw "Free local AI setup is incomplete. Install CUDA-enabled PyTorch and requirements-ai.txt; no paid fallback is permitted."
+            }
+            & python scripts/generate_free_ai_pack.py
+            if ($LASTEXITCODE -ne 0) { throw "Local FLUX.1-schnell artwork generation failed; no pack marked ready." }
+            & python scripts/generate_reel.py
+            if ($LASTEXITCODE -ne 0) { throw "Marathi-first Reel rendering failed; no pack marked ready." }
+            & python scripts/package_daily.py
+            if ($LASTEXITCODE -ne 0) { throw "Final AI package quality checks failed; no pack marked ready." }
+        }
+        finally {
+            Pop-Location
+            if ($null -eq $previousOutput) {
+                Remove-Item Env:ARCSTUDIO_OUTPUT_DIR -ErrorAction SilentlyContinue
+            } else {
+                $env:ARCSTUDIO_OUTPUT_DIR = $previousOutput
+            }
+        }
+
+        $finalManifestPath = Join-Path $stagePack "package_manifest.json"
+        if (-not (Test-Path $finalManifestPath)) {
+            throw "Final manifest missing after local AI processing."
+        }
+        $finalManifest = Get-Content -Raw -Path $finalManifestPath | ConvertFrom-Json
+        $aiManifestPath = Join-Path $stagePack "ai_generation_manifest.json"
+        if (-not (Test-Path $aiManifestPath)) {
+            throw "AI provenance manifest missing; refusing to save as ready-to-post."
+        }
+        $aiManifest = Get-Content -Raw -Path $aiManifestPath | ConvertFrom-Json
+        if ($aiManifest.model_id -ne "black-forest-labs/FLUX.1-schnell" -or
+            $aiManifest.mode -ne "local open-weight inference; no paid hosted API") {
+            throw "AI provenance check failed; refusing to save as ready-to-post."
+        }
+
+        if (Test-Path $target) { Remove-Item -Path $target -Recurse -Force }
+        Move-Item -Path $stagePack -Destination $target
         $status = [ordered]@{
             downloaded_at = (Get-Date).ToString("o")
             github_repository = $Repo
             workflow_run_id = $runId
             package_date = $packDay
-            sha256_checks = "passed"
+            sha256_checks = "passed for cloud concept seed and final package QA"
+            ai_model = $aiManifest.model_id
+            ai_model_license = $aiManifest.model_license
+            local_render_status = "verified by package_daily.py"
+            publish_status = "not published"
         }
         $status | ConvertTo-Json -Depth 4 | Set-Content -Path (Join-Path $target "local_download_status.json") -Encoding UTF8
-        Write-Log "Saved and verified pack for $packDay to $target"
+        Write-Log "Saved AI-generated, verified content pack for $packDay to $target"
         $downloaded++
     }
     catch {
@@ -118,5 +173,5 @@ foreach ($run in $runs) {
 
 Write-Log "Complete. New packs: $downloaded; already present: $skippedExisting; unavailable/failed: $skippedUnavailable."
 if ($downloaded -eq 0 -and $skippedExisting -eq 0) {
-    throw "No daily content packs could be downloaded. The workflow may not have produced an artifact yet; check https://github.com/artclass11/ARCSTUDIO/actions"
+    throw "No final AI content packs could be downloaded. Check the cloud workflow and local GPU/model setup: https://github.com/artclass11/ARCSTUDIO/actions"
 }
