@@ -321,7 +321,7 @@ def main() -> None:
         "-r", str(FPS), "-c:v", "libx264", "-preset", "medium", "-crf", "19",
         "-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.1",
         "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart",
-        str(OUT / "reel.mp4",
+        str(OUT / "reel.mp4")
     ]
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     if proc.returncode:
