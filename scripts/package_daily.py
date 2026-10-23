@@ -5,7 +5,6 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
-import zipfile
 from datetime import date
 from pathlib import Path
 from PIL import Image
@@ -19,7 +18,8 @@ REQUIRED = [
     "slide_01.png", "slide_02.png", "slide_03.png", "slide_04.png",
     "preview_contact_sheet.jpg", "caption.txt", "sources.json", "concept.json",
     "research_notes.md", "reel.mp4", "reel_cover.jpg", "reel_caption.txt",
-    "reel_script_marathi.txt", "reel_subtitles_mr.srt", "reel_manifest.json",
+    "reel_script_marathi.txt", "reel_subtitles_mr.srt", "reel_manifest.json", "reel_ambient.wav",
+    "reel_scene_01.png", "reel_scene_02.png", "reel_scene_03.png", "reel_scene_04.png", "reel_scene_05.png",
 ]
 
 def sha256(path: Path) -> str:
@@ -104,9 +104,6 @@ def main() -> None:
     )
     (OUT / "POSTING_README.txt").write_text(posting_notes, encoding="utf-8")
 
-    PACK_DIR.mkdir(parents=True, exist_ok=True)
-    day = source_data["date"]
-    archive_path = PACK_DIR / f"ARCSTUDIO91_Daily_Pack_{day}.zip"
     package_files = [
         p for p in sorted(OUT.iterdir())
         if p.is_file() and not p.name.startswith("_reel_source_")
@@ -122,22 +119,9 @@ def main() -> None:
         "publish_status": "not published by this packaging step",
     }
     (OUT / "package_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    package_files.append(OUT / "package_manifest.json")
-
-    with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
-        for path in package_files:
-            archive.write(path, arcname=path.name)
-
-    # Integrity test the ZIP and verify that the Reel and carousel files are present.
-    with zipfile.ZipFile(archive_path) as archive:
-        bad = archive.testzip()
-        if bad:
-            raise RuntimeError(f"ZIP integrity failed at {bad}.")
-        zipped = set(archive.namelist())
-        must_be_zipped = {"reel.mp4", "reel_cover.jpg", "reel_caption.txt",
-                          "slide_01.jpg", "slide_02.jpg", "slide_03.jpg", "slide_04.jpg"}
-        if not must_be_zipped.issubset(zipped):
-            raise RuntimeError("ZIP integrity check failed: one or more essential files are missing.")
+    print(f"Validated {len(package_files)} content files.")
+    print(f"Reel: {video_meta['width']}×{video_meta['height']} / {video_meta['duration_seconds']}s.")
+    print(f"Daily pack ready in {OUT}. GitHub Actions will bundle this directory as one download artifact.")
     print(f"Validated {len(package_files)} content files.")
     print(f"Reel: {video_meta['width']}×{video_meta['height']} / {video_meta['duration_seconds']}s.")
     print(f"Package: {archive_path} ({archive_path.stat().st_size:,} bytes)")
