@@ -2,13 +2,13 @@
 """Create one Marathi-first 9:16 Reel using free Pillow, NumPy and FFmpeg.
 
 No image-generation credits, paid APIs, unlicensed audio, or robotic eSpeak voice.
-The Reel uses licensed daily reference photos when available, with original diagram
-art as a safe visual fallback. Text remains readable without sound.
+The final local pack uses same-day open-weight AI-generated concept visuals. No hosted generation API is used. Text remains readable without sound.
 """
 from __future__ import annotations
 
 import json
 import math
+import os
 import shutil
 import subprocess
 import wave
@@ -20,7 +20,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "output" / "current"
+OUT = Path(os.environ.get("ARCSTUDIO_OUTPUT_DIR", str(ROOT / "output" / "current"))).resolve()
 SIZE = (1080, 1920)
 FPS = 30
 SCENE_SECONDS = 5.0
