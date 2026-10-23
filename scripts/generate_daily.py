@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate one minimal, original ARCSTUDIO91 four-slide carousel using licensed Commons photos."""
+"""Shared concept and layout utilities for ARCSTUDIO91. Final visuals must use the local open-weight AI pipeline."""
 
 from __future__ import annotations
 
@@ -536,77 +536,13 @@ def editorial_pillar(concept: dict[str, Any]) -> str:
 
 
 def main() -> None:
-    today = date.today()
-    DATA.mkdir(parents=True, exist_ok=True)
-    try:
-        concept_history_data = json.loads(CONCEPT_HISTORY_PATH.read_text(encoding="utf-8")) if CONCEPT_HISTORY_PATH.exists() else {"concepts": []}
-    except (OSError, ValueError):
-        concept_history_data = {"concepts": []}
-    concept_entries = concept_history_data.get("concepts", [])
-    todays_entry = next((entry for entry in reversed(concept_entries) if entry.get("date") == today.isoformat()), None)
-    by_type = {item.get("type"): item for item in CONCEPTS}
-    if todays_entry and todays_entry.get("type") in by_type:
-        concept = by_type[todays_entry["type"]]
-    else:
-        recent_names = {entry.get("type") for entry in concept_entries[-30:]}
-        eligible = [item for item in CONCEPTS if item.get("type") not in recent_names]
-        if not eligible:
-            eligible = CONCEPTS
-        concept = eligible[today.toordinal() % len(eligible)]
-    history = json.loads(HISTORY_PATH.read_text(encoding="utf-8")) if HISTORY_PATH.exists() else {"images": []}
-    recent = history.get("images", [])[-80:]
-    recent_titles = {entry.get("title") for entry in recent}
-    used_today: set[str] = set()
-    try:
-        photos = [choose_image(query, used_today, recent_titles) for query in concept["queries"]]
-    except RuntimeError as exc:
-        print(f"Licensed photography unavailable; falling back to original concept artwork: {exc}")
-        photos = [original_concept_art(concept, index) for index in range(1, 5)]
-    # Temporary source-photo copies are used to build today's Reel, then removed by generate_reel.py.
-    OUT.mkdir(parents=True, exist_ok=True)
-    for index, photo in enumerate(photos, start=1):
-        with Image.open(__import__("io").BytesIO(photo["bytes"])) as source:
-            source_image = ImageOps.fit(ImageOps.exif_transpose(source).convert("RGB"), SIZE,
-                                        method=Image.Resampling.LANCZOS, centering=(0.5, 0.45))
-            source_image.save(OUT / f"_reel_source_{index:02d}.jpg", quality=94, optimize=True)
-    paths = [render_slide(photo, concept, index) for index, photo in enumerate(photos, start=1)]
-    contact_sheet = create_contact_sheet(paths)
-    caption = make_caption(concept, photos, today)
-    research_notes = write_research_notes(concept, photos, today)
-    metadata = {
-        "date": today.isoformat(), "pillar": editorial_pillar(concept),
-        "concept": concept["type"], "headline": concept["headline"],
-        "contact_sheet": str(contact_sheet.relative_to(ROOT)),
-        "research_notes": str(research_notes.relative_to(ROOT)),
-        "photos": [{key: value for key, value in photo.items() if key != "bytes"} for photo in photos],
-        "files": [str(path.relative_to(ROOT)) for path in paths], "caption_length": len(caption),
-    }
-    (OUT / "sources.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
-    (OUT / "concept.json").write_text(json.dumps({
-        "date": today.isoformat(), "type": concept["type"], "headline": concept["headline"],
-        "headline_mr": concept.get("mr", ""),
-        "original_idea": concept["idea"], "idea_mr": concept["idea_mr"],
-        "comfort": concept["comfort"], "comfort_mr": concept["comfort_mr"],
-        "life": concept["life"], "life_mr": concept["life_mr"],
-        "materials": concept["materials"], "materials_mr": concept["materials_mr"],
-        "visual_mode": "original concept artwork" if all(p.get("original_art") for p in photos) else "licensed reference photography",
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
-    recent.extend({"date": today.isoformat(), "title": photo["title"]} for photo in photos)
-    history["images"] = recent[-80:]
-    HISTORY_PATH.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
-    if not todays_entry:
-        concept_entries.append({
-            "date": today.isoformat(),
-            "pillar": editorial_pillar(concept),
-            "type": concept["type"],
-            "headline": concept["headline"],
-            "insight": concept.get("comfort", ""),
-            "visual_motif": concept.get("queries", [""])[0],
-        })
-        concept_history_data["concepts"] = concept_entries[-120:]
-        CONCEPT_HISTORY_PATH.write_text(json.dumps(concept_history_data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Generated four separate {SIZE[0]}x{SIZE[1]} slides for {today}: {concept['type']} / {concept['headline']}")
-    print(f"Caption length: {len(caption)}. Sources are recorded in output/current/sources.json.")
+    raise SystemExit(
+        "Strict free-AI mode: this helper cannot create a final post-ready pack by itself. "
+        "Run scripts/create_daily_concept.py for the seed, then "
+        "scripts/generate_free_ai_pack.py, scripts/generate_reel.py and "
+        "scripts/package_daily.py with ARCSTUDIO_OUTPUT_DIR set. "
+        "No stock-photo or non-AI fallback is permitted for final assets."
+    )
 
 if __name__ == "__main__":
     main()
