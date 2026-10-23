@@ -187,12 +187,20 @@ def font_path(filename: str) -> str:
 
 REGULAR_FONT = font_path("NotoSansDevanagari-Regular.ttf")
 BOLD_FONT = font_path("NotoSansDevanagari-Bold.ttf")
+LATIN_REGULAR_FONT = font_path("DejaVuSans.ttf")
+LATIN_BOLD_FONT = font_path("DejaVuSans-Bold.ttf")
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
     try:
         return ImageFont.truetype(BOLD_FONT if bold else REGULAR_FONT, size=size)
     except OSError:
         return ImageFont.load_default()
+
+def latin_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    try:
+        return ImageFont.truetype(LATIN_BOLD_FONT if bold else LATIN_REGULAR_FONT, size=size)
+    except OSError:
+        return font(size, bold)
 
 def wrap_text(draw: ImageDraw.ImageDraw, text: str, selected_font: ImageFont.FreeTypeFont, max_width: int) -> list[str]:
     words = text.split()
@@ -348,8 +356,8 @@ def original_concept_art(concept: dict[str, Any], variant: int) -> dict[str, Any
     }
 
 def header(draw: ImageDraw.ImageDraw, index: int, contact: bool = False) -> None:
-    top_font = font(28, True)
-    small = font(19)
+    top_font = latin_font(28, True)
+    small = latin_font(19)
     draw.text((64, 54), "@arcstudio91", font=top_font, fill=(255, 255, 255, 250))
     if contact:
         label = "+91 9921894495"
@@ -366,31 +374,31 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
     white = (255, 255, 255, 255)
     muted = (246, 246, 246, 240)
     if index == 1:
-        draw.text((x, 710), concept["type"].upper(), font=font(23, True), fill=muted)
-        y = text_block(draw, concept["headline"], x, 760, font(74, True), width, white, 5, 2)
+        draw.text((x, 710), concept["type"].upper(), font=latin_font(23, True), fill=muted)
+        y = text_block(draw, concept["headline"], x, 760, latin_font(74, True), width, white, 5, 2)
         y = text_block(draw, concept["mr"], x, y + 12, font(43, True), width, white, 7, 2)
         text_block(draw, concept["idea"], x, y + 20, font(26), width, muted, 7, 2)
     elif index == 2:
-        draw.text((x, 790), "01 / COMFORT", font=font(24, True), fill=muted)
-        y = text_block(draw, concept["comfort"], x, 850, font(57, True), width, white, 7, 3)
+        draw.text((x, 790), "01 / COMFORT", font=latin_font(24, True), fill=muted)
+        y = text_block(draw, concept["comfort"], x, 850, latin_font(57, True), width, white, 7, 3)
         text_block(draw, concept["comfort_mr"], x, y + 18, font(38), width, white, 8, 2)
     elif index == 3:
-        draw.text((x, 790), "02 / LONG LIFE", font=font(24, True), fill=muted)
-        y = text_block(draw, concept["life"], x, 850, font(57, True), width, white, 7, 3)
+        draw.text((x, 790), "02 / LONG LIFE", font=latin_font(24, True), fill=muted)
+        y = text_block(draw, concept["life"], x, 850, latin_font(57, True), width, white, 7, 3)
         text_block(draw, concept["life_mr"], x, y + 18, font(38), width, white, 8, 2)
     else:
-        draw.text((x, 715), "MATERIALS, SIMPLIFIED", font=font(25, True), fill=muted)
+        draw.text((x, 715), "MATERIALS, SIMPLIFIED", font=latin_font(25, True), fill=muted)
         y = 775
         for line in concept["materials"]:
-            y = text_block(draw, "— " + line, x, y, font(29), width, white, 7, 2) + 9
+            y = text_block(draw, "— " + line, x, y, latin_font(29), width, white, 7, 2) + 9
         y += 14
-        draw.text((x, y), "ARCHITECTURE · INTERIORS · HOSPITALITY", font=font(19, True), fill=muted)
+        draw.text((x, y), "ARCHITECTURE · INTERIORS · HOSPITALITY", font=latin_font(19, True), fill=muted)
         y += 35
-        draw.text((x, y), "SUSTAINABLE DESIGN · RENOVATION", font=font(19, True), fill=muted)
+        draw.text((x, y), "SUSTAINABLE DESIGN · RENOVATION", font=latin_font(19, True), fill=muted)
         y += 40
-        text_block(draw, "Local materials • verified quality • site-specific details", x, y, font(21), width, muted, 6, 2)
+        text_block(draw, "Local materials • verified quality • site-specific details", x, y, latin_font(21), width, muted, 6, 2)
         footer = "ORIGINAL CONCEPT ART • NOT A BUILT PROJECT" if photo.get("original_art") else "PHOTO SOURCES + LICENCES IN CAPTION"
-        draw.text((x, 1280), footer, font=font(16), fill=muted)
+        draw.text((x, 1280), footer, font=latin_font(16), fill=muted)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"slide_{index:02d}.jpg"
     png_path = OUT / f"slide_{index:02d}.png"
