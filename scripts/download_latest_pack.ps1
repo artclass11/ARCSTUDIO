@@ -47,7 +47,8 @@ foreach ($run in $runs) {
 
     # Avoid downloading the same day's pack repeatedly.
     if ((Test-Path (Join-Path $target "package_manifest.json")) -and
-        (Test-Path (Join-Path $target "reel.mp4"))) {
+        (Test-Path (Join-Path $target "reel.mp4")) -and
+        (Test-Path (Join-Path $target "ai_generation_manifest.json"))) {
         $skippedExisting++
         continue
     }
@@ -73,7 +74,8 @@ foreach ($run in $runs) {
         $packDay = [string]$manifest.date
         if ($packDay -notmatch '^\d{4}-\d{2}-\d{2}
         if ((Test-Path (Join-Path $target "package_manifest.json")) -and
-            (Test-Path (Join-Path $target "reel.mp4"))) {
+            (Test-Path (Join-Path $target "reel.mp4")) -and
+            (Test-Path (Join-Path $target "ai_generation_manifest.json"))) {
             $skippedExisting++
             continue
         }
