@@ -196,6 +196,7 @@ foreach ($run in $runs) {
         if ($processingStarted) {
             if ($stagePack -and (Test-Path $stagePack)) { Remove-Item -Path $stagePack -Recurse -Force -ErrorAction SilentlyContinue }
             if ($target -and (Test-Path $target)) { Remove-Item -Path $target -Recurse -Force -ErrorAction SilentlyContinue }
+            if ($zipPath -and (Test-Path $zipPath)) { Remove-Item -Path $zipPath -Force -ErrorAction SilentlyContinue }
             throw "Strict local AI rendering or ZIP validation failed for concept seed $runDay. No older concept will be substituted."
         }
     }
