@@ -194,7 +194,9 @@ foreach ($run in $runs) {
         Write-Log "Run $runId download attempt failed: $($_.Exception.Message)"
         $skippedUnavailable++
         if ($processingStarted) {
-            throw "Strict local AI rendering failed for concept seed $runDay. No older concept will be substituted."
+            if ($stagePack -and (Test-Path $stagePack)) { Remove-Item -Path $stagePack -Recurse -Force -ErrorAction SilentlyContinue }
+            if ($target -and (Test-Path $target)) { Remove-Item -Path $target -Recurse -Force -ErrorAction SilentlyContinue }
+            throw "Strict local AI rendering or ZIP validation failed for concept seed $runDay. No older concept will be substituted."
         }
     }
     finally {
