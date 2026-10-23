@@ -49,7 +49,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup_local_ai_environment.ps
 
 The script creates `.venv-ai` and installs the base tools. It then pauses so you can install a CUDA-enabled PyTorch build matching your GPU/driver. Use the official selector at [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/) and run the generated command with `.venv-ai\Scripts\python.exe` as the Python executable. Return to the setup script and confirm CUDA works; it will then install `requirements-ai.txt`.
 
-**Hardware note:** FLUX.1-schnell is a large model. The first local render downloads several gigabytes of weights. Ensure sufficient GPU VRAM, system RAM and disk space. This repository will not switch to a paid API or lower-quality non-AI fallback if the machine cannot run the model.
+**Hardware note:** FLUX.1-schnell is a large model. The first local render downloads a large model (allow tens of gigabytes of disk space, depending on the model files/cache). Ensure sufficient GPU VRAM, system RAM and disk space. This repository will not switch to a paid API or lower-quality non-AI fallback if the machine cannot run the model.
 
 ### 3. Install the daily download-and-render task
 
@@ -57,7 +57,7 @@ The script creates `.venv-ai` and installs the base tools. It then pauses so you
 powershell -ExecutionPolicy Bypass -File .\scripts\install_daily_download_task.ps1
 ```
 
-The task is scheduled daily for **08:35 IST**. Make sure the machine is powered on, connected to the internet and the Windows user is signed in. The script pulls the latest workflow code, finds the latest completed concept seed, checks seed hashes, runs local AI generation, validates the MP4 and slides, and only then moves the completed pack into the dated local folder.
+The task is scheduled daily for **08:35 Windows local time** (08:35 IST when Windows is set to India time). Make sure the machine is powered on, connected to the internet and the Windows user is signed in. The script pulls the latest workflow code, finds the latest completed concept seed, checks seed hashes, runs local AI generation, validates the MP4 and slides, and only then moves the completed pack into the dated local folder.
 
 To test immediately:
 
