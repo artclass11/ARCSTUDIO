@@ -1,70 +1,98 @@
-# ARCSTUDIO91 Daily Content Publisher
+# ARCSTUDIO91 Daily Open-Weight AI Content System
 
-Free daily architecture content workflow for @arcstudio91. Each daily build creates one Marathi-first vertical Reel plus a four-slide architecture carousel using Python/Pillow, NumPy and FFmpeg. It uses reusable Wikimedia Commons photography only when a suitable licence is verified; otherwise it falls back to original concept artwork. The carousel can publish to Instagram and a connected Facebook Page through Meta's official Graph API only when explicitly enabled.
+This project creates a daily Marathi-first Instagram Reel and a four-slide architecture carousel for @arcstudio91 using strictly free tools and locally run open-weight AI models. The final media workflow does not call paid image-generation services, paid hosted inference endpoints, or generation-credit APIs.
 
-## Daily behaviour
+## Daily schedule
 
-- Runs around 08:07 India time (02:37 UTC).
-- Creates one Reel per daily build: MP4, cover JPG, Marathi on-screen text, Marathi subtitle file, a short Marathi narration script, and an original low-volume ambient sound bed. It intentionally avoids low-quality robotic TTS; the Reel has no spoken voiceover by default.
-- Validates Reel format (1080×1920, H.264, 20–30 seconds, audio stream), carousel dimensions, source metadata, and SHA-256 file manifest before packaging.
-- Uploads the full content folder as the GitHub Actions artifact `ARCSTUDIO91-Daily-Pack`, retained for 30 days. Video files are kept in the artifact instead of Git history to avoid repository bloat.
-- Rotates original concepts across 10 editorial pillars: design studies; climate-wise living; space planning; durability and repairability; people-first places; adaptive reuse; interiors and sensory design; landscape and water; architecture explainers; and design decision stories.
-- Includes residential, apartment, villa, office, healthcare, education, hospitality, retail, public-space, landscape and retrofit typologies, plus practical lessons on wayfinding, acoustics, daylight, maintenance, materials and water.
-- Records concept date, pillar, headline, core insight and visual motif in `data/concept_history.json`; the selector avoids recently used concepts for up to 30 prior entries when alternatives exist.
-- Caption tone aims for useful, save-worthy education and one natural discussion prompt—not clickbait, fake project claims or hashtag stuffing.
-- Uses Wikimedia Commons photographs only when a reusable licence is verifiable, and includes attribution in the bilingual caption.
-- Creates exactly four separate 1080×1350 JPG slides plus PNG masters and a review-only contact sheet (never a publishable 2×2 collage). Images are full-bleed, text is minimal, and phone details appear only on slide 4.
-- Adds a varied, date-rotated discussion prompt to the caption and generates source/licence notes plus a quality manifest for review.
-- Commits images to this public repo so Meta can fetch them over HTTPS.
-- Publishes an Instagram carousel and a Facebook Page multi-photo post only when explicitly enabled.
-- Tracks publish state and refuses automatic retries after an ambiguous publish response.
-- Uses free tools only. No paid image credits, Metricool or Windsor.ai. The daily workflow is scheduled for approximately 08:07 India time; generation is separate from actual platform publishing.
+- **08:07 IST:** GitHub Actions chooses an original concept, updates the concept history, and uploads a small concept-seed artifact. This is not a finished post.
+- **08:35 IST:** a Windows Task Scheduler task on your own PC downloads that seed, runs the local AI model, creates the carousel and Reel, validates them, and saves the final pack to `Documents\ARCSTUDIO91\DailyPacks\YYYY-MM-DD`.
+- If the local PC is off or not connected, the task can run when Windows makes it available again. The GitHub seed artifact is retained for 30 days.
+- Final local outputs are **not auto-published**. The workflow deliberately separates generation from posting and never claims a post went live without confirmation.
 
-Reference photos are inspirational examples and are not represented as completed ARCSTUDIO91 projects. If suitable licensed images are unavailable, generation fails safely and no post is published.
+## The free AI model
 
-## Automatic download to your Windows computer
+- **Default still-image model:** [Black Forest Labs FLUX.1-schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell), an open-weight text-to-image model with an Apache-2.0 licence and 1–4-step generation documented by the model publisher.
+- The model runs locally through Diffusers on a compatible CUDA GPU. Model weights are downloaded once and cached on the PC. Rendering uses no per-image charge or hosted inference API.
+- The model has 12 billion parameters; hardware and memory requirements matter. See the official model card for current details. This workflow does not promise that every PC can run it.
+- The final carousel uses four independently generated image backgrounds with precise text overlay via Python/Pillow. Each slide is a separate 1080×1350 JPG and PNG—not a combined collage.
+- The Reel uses those same-day AI-generated visuals as its scenes, with restrained motion and transitions, Marathi on-screen copy, SRT subtitles, a Marathi narration script, and a gentle locally generated ambient music bed. It does **not** pretend the script is a voiceover; no synthetic spoken narration is inserted unless a natural free model is separately vetted.
+- AI visuals are clearly labelled as concept artwork, not completed ARCSTUDIO91 projects. The caption and source notes identify the model and provenance.
 
-The cloud workflow cannot write files directly to your computer. A free local downloader and Task Scheduler installer are included so your PC can fetch each daily pack from GitHub Actions and save it by date.
+## Strict zero-credit policy
 
-1. Install [GitHub CLI](https://cli.github.com/) and Git for Windows if they are not installed.
-2. Open PowerShell and sign in once with:
-   `gh auth login`
-3. Clone this public repository:
-   `gh repo clone artclass11/ARCSTUDIO`
-4. Open the cloned folder, then run:
-   `powershell -ExecutionPolicy Bypass -File .\scripts\install_daily_download_task.ps1`
-5. The task runs at 08:35 local time, after the cloud build scheduled at 08:07 India time. Packs are saved under `Documents\ARCSTUDIO91\DailyPacks\YYYY-MM-DD`.
+1. **No paid generation services:** do not use image_gen, paid APIs, paid hosted inference endpoints, credits, subscriptions, or anything that asks for a payment card for this workflow.
+2. **No hosted-free-tier dependency for final imagery:** small trial credits, public demo Spaces, and provider quotas are not considered reliable daily production infrastructure.
+3. **Local open weights only for final visual creation:** use FLUX.1-schnell by default. If it cannot run, stop the final-pack build and report the hardware/setup blocker. Do not silently replace AI images with stock photos, screenshots, generated collages, or hand-drawn placeholders.
+4. Python/Pillow and FFmpeg may be used for typography, layout, motion, sound mixing and export QA. They do not substitute for the required AI-generated visual assets.
+5. The workflow must not mark anything ready to post until AI model provenance, slide dimensions, MP4 format, duration, soundtrack, captions and package manifest pass validation.
 
-To test immediately, run `powershell -ExecutionPolicy Bypass -File .\scripts\download_latest_pack.ps1`. The script checks SHA-256 hashes and can download missing recent packs from completed runs when your computer was offline, as long as the GitHub Actions artifacts have not expired. Keep GitHub CLI authenticated. The computer needs an internet connection and to be powered on; with an interactive Task Scheduler principal, the Windows user must be signed in. Artifacts are retained for 30 days, not forever.
+## One-time setup on Windows
 
-## Daily Reel package
+### 1. Clone the repository
 
-The artifact contains `reel.mp4`, `reel_cover.jpg`, `reel_caption.txt`, `reel_subtitles_mr.srt`, `reel_script_marathi.txt`, scene PNGs, and the four separate carousel JPGs/PNG masters. The spoken narration is not synthesized in this version: the Reel is Marathi-led on screen and has an original ambient bed, avoiding a robotic voice. The narration script is included separately for a natural human recording or a properly licensed neural voice. Nothing should be described as published until Instagram confirms it.
+Install [GitHub CLI](https://cli.github.com/) and Python 3.11 or 3.12, then open PowerShell:
 
-## One-time Meta setup
+```powershell
+gh auth login
+gh repo clone artclass11/ARCSTUDIO
+cd ARCSTUDIO
+```
 
-1. Confirm @arcstudio91 is an Instagram Professional (Business or Creator) account linked to the Facebook Page you own/manage.
-2. In Meta for Developers, create/select an app and configure Instagram API with Facebook Login.
-3. Authorize the app for these permissions as required by Meta: instagram_basic, instagram_content_publish, pages_show_list, pages_read_engagement, and pages_manage_posts. Complete any required Page Publishing Authorization or access approval. Official references: https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api and https://developers.facebook.com/documentation/pages-api/posts
-4. Get the numeric Instagram Professional Account ID, numeric Facebook Page ID, and a Page access token authorized for the linked Page. Never put tokens in code, issues, commits or chat.
-5. In repository Settings → Secrets and variables → Actions → Secrets, add:
-   - IG_USER_ID — numeric Instagram Professional Account ID.
-   - META_PAGE_ID — numeric Facebook Page ID.
-   - META_PAGE_ACCESS_TOKEN — Page access token with the required permissions.
-6. Under Settings → Secrets and variables → Actions → Variables, add AUTO_PUBLISH_ENABLED with value YES.
+### 2. Configure the local AI environment
 
-Publishing is OFF until AUTO_PUBLISH_ENABLED is set to YES. The workflow still builds the daily carousel and uploads an Actions artifact while publishing is off.
+Run:
 
-## Test and operate
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\setup_local_ai_environment.ps1
+```
 
-- Open Actions → ARCSTUDIO91 Daily Architecture → Run workflow while publishing is still off. Inspect the four images, caption and photo credits.
-- Only after the correct accounts and permissions are verified, add the secrets and set AUTO_PUBLISH_ENABLED to YES.
-- A successful run records IDs/status in data/publish_state.json. Verify the actual Instagram post and Facebook Page post.
-- If a final publish response is ambiguous, the state is marked needs_review. Inspect the platform before any manual retry.
-- Meta tokens can expire or be revoked. If an authentication error occurs, re-authorize and replace the repository secret.
+The script creates `.venv-ai` and installs the base tools. It then pauses so you can install a CUDA-enabled PyTorch build matching your GPU/driver. Use the official selector at [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/) and run the generated command with `.venv-ai\Scripts\python.exe` as the Python executable. Return to the setup script and confirm CUDA works; it will then install `requirements-ai.txt`.
 
-## Brand rules
+**Hardware note:** FLUX.1-schnell is a large model. The first local render downloads several gigabytes of weights. Ensure sufficient GPU VRAM, system RAM and disk space. This repository will not switch to a paid API or lower-quality non-AI fallback if the machine cannot run the model.
 
-Use the public @arcstudio91 profile as broad stylistic inspiration only when accessible; never copy distinctive layouts, captions, plans, renders or projects. The principles remain minimal functionality, low maintenance, practical security/safety and sustainability. A 100-year lifecycle is an aspiration, never a guarantee.
+### 3. Install the daily download-and-render task
 
-Caption is in Marathi and English, with services and photo attribution. Contact details appear only on slide 4: +91 9921894495. Account passwords and session cookies are not used.
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install_daily_download_task.ps1
+```
+
+The task is scheduled daily for **08:35 IST**. Make sure the machine is powered on, connected to the internet and the Windows user is signed in. The script pulls the latest workflow code, finds the latest completed concept seed, checks seed hashes, runs local AI generation, validates the MP4 and slides, and only then moves the completed pack into the dated local folder.
+
+To test immediately:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\download_latest_pack.ps1
+```
+
+Task logs are saved in `Documents\ARCSTUDIO91\logs\daily-pack-download.log`. If AI generation fails, no final folder is marked ready to post. Check the log, model cache, CUDA setup and GitHub Actions status.
+
+## Daily content pack contents
+
+- `reel.mp4`: 1080×1920 H.264 MP4, 30 fps, approximately 25 seconds, with original ambient audio.
+- `reel_cover.jpg`, `reel_caption.txt`, `reel_subtitles_mr.srt`, `reel_script_marathi.txt`.
+- Exactly four separately exported 1080×1350 carousel JPGs and four PNG masters.
+- `preview_contact_sheet.jpg`: review only—never upload this as a carousel slide.
+- `ai_generation_manifest.json`: model identifier, prompts, seeds and output hashes.
+- `sources.json`, `research_notes.md`, `concept.json`, `package_manifest.json`, `POSTING_README.txt`.
+
+## Content quality and brand safety
+
+- Rotate typologies and editorial pillars; avoid repeated concepts, headlines, images and sentence structures with a 30-concept history where prior runs are available.
+- Brand philosophy: minimal but functional, low maintenance, practical security/safety, climate-responsive and sustainable. A 100-year life is an aspiration, not a guarantee.
+- Copy and on-screen text are Marathi-first where possible. Slides 1–3 must not display contact details; slide 4 carries +91 9921894495 at the top. The account handle appears at the top of all slides.
+- Keep all slide images separate. The contact sheet is preview-only.
+- Research informs ideas but may never be copied. Label concepts as concepts, verify claims, and treat structural, safety, waterproofing, cost and code guidance as educational—not site-specific construction advice.
+- Use one clear idea per slide and one story arc per Reel. Keep the visuals naturally photographic, minimal, modern, and uncluttered.
+
+## Useful project files
+
+- [Daily concept workflow](.github/workflows/daily-publish.yml)
+- [Content quality skill](SKILL.md)
+- [Daily concept selector](scripts/create_daily_concept.py)
+- [Local open-weight AI renderer](scripts/generate_free_ai_pack.py)
+- [Reel renderer](scripts/generate_reel.py)
+- [Pack QA and manifest](scripts/package_daily.py)
+- [Local downloader](scripts/download_latest_pack.ps1)
+- [AI setup helper](scripts/setup_local_ai_environment.ps1)
+
+**Publishing remains manual and explicit.** Only upload the final dated local pack after reviewing it. This project does not report content as posted unless Instagram itself confirms publication.
