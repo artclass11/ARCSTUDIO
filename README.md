@@ -59,6 +59,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install_daily_download_task.p
 
 The task is scheduled daily for **08:35 Windows local time** (08:35 IST when Windows is set to India time). Make sure the machine is powered on, connected to the internet and the Windows user is signed in. The script pulls the latest workflow code, finds the latest completed concept seed, checks seed hashes, runs local AI generation, validates the MP4 and slides, and only then moves the completed pack into the dated local folder.
 
+For today's first build, the concept workflow needs one successful run after this change: open [GitHub Actions](https://github.com/artclass11/ARCSTUDIO/actions/workflows/daily-publish.yml), select **Run workflow**, and wait for the concept-seed run to complete. Then run the local downloader below. The scheduled 08:07/08:35 sequence handles later daily runs automatically after setup.
+
 To test immediately:
 
 ```powershell
