@@ -8,6 +8,7 @@ This project creates a daily Marathi-first Instagram Reel and a four-slide archi
 - **08:35 IST:** a Windows Task Scheduler task on your own PC downloads that seed, runs the local AI model, creates the carousel and Reel, validates them, and saves the final pack to `Documents\ARCSTUDIO91\DailyPacks\YYYY-MM-DD`.
 - If the local PC is off or not connected, the task can run when Windows makes it available again. The GitHub seed artifact is retained for 30 days.
 - Final local outputs are **not auto-published**. The workflow deliberately separates generation from posting and never claims a post went live without confirmation.
+- After local AI/video QA passes, Windows saves both the complete dated folder and a single ZIP named `ARCSTUDIO91_Daily_AI_Pack_YYYY-MM-DD.zip` in the `Documents\\ARCSTUDIO91\\DailyPacks` directory.
 
 ## The free AI model
 
