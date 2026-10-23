@@ -68,7 +68,7 @@ def main() -> None:
     for i in range(1, 5):
         validate_image(OUT / f"slide_{i:02d}.jpg", (1080, 1350))
         validate_image(OUT / f"slide_{i:02d}.png", (1080, 1350))
-    validate_image(OUT / "preview_contact_sheet.jpg", (882, 1080))
+    validate_image(OUT / "preview_contact_sheet.jpg", (888, 1090))
     validate_image(OUT / "reel_cover.jpg", (1080, 1920))
     video_meta = validate_video(OUT / "reel.mp4")
 
