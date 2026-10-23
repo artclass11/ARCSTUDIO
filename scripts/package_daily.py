@@ -75,6 +75,7 @@ def main() -> None:
     source_data = json.loads((OUT / "sources.json").read_text(encoding="utf-8"))
     concept_data = json.loads((OUT / "concept.json").read_text(encoding="utf-8"))
     reel_data = json.loads((OUT / "reel_manifest.json").read_text(encoding="utf-8"))
+    day = source_data["date"]
     if source_data.get("date") != reel_data.get("date"):
         raise RuntimeError("Pack QA failed: carousel and Reel dates do not match.")
     if concept_data.get("type") != source_data.get("concept"):
@@ -85,7 +86,7 @@ def main() -> None:
         f"Concept: {source_data['concept']}\n"
         f"Headline: {source_data['headline']}\n\n"
         "READY-TO-POST FILES\n"
-        "- reel.mp4: vertical 1080×1920 H.264 MP4, approximately 23 seconds.\n"
+        "- reel.mp4: vertical 1080×1920 H.264 MP4, approximately 25 seconds.\n"
         "- reel_cover.jpg: Reel cover / cover-picker image.\n"
         "- reel_caption.txt: copy/paste caption for the Reel.\n"
         "- reel_subtitles_mr.srt and reel_script_marathi.txt: accessible Marathi text and optional narration script.\n"
