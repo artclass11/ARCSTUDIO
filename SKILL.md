@@ -79,3 +79,17 @@ Rotate broadly across these pillars rather than posting the same building type e
 
 ## Daily carousel publishing package
 By default, produce four 1080×1350 slides as separate JPGs and PNG masters plus a review contact sheet, bilingual caption and source/quality notes. Keep contact details only at the top of slide 4. Build the asset package even when publishing is unavailable; publishing status must remain explicit and truthful.
+
+
+## Daily Reel requirement
+Create exactly one vertical Instagram Reel per daily build in addition to the four-slide carousel. Target 1080×1920, H.264 MP4, 30 fps, approximately 20–30 seconds, with a cover JPG, Marathi-first on-screen copy, SRT subtitles, and copy-ready caption. Use gentle original audio created locally or an individually verified licence; do not scrape trending music or use copyrighted tracks without permission. Keep the Reel sound-off understandable.
+
+Avoid robotic Marathi TTS. Unless a natural, properly licensed free neural voice can be run and quality-checked in the workflow, use Marathi on-screen storytelling plus the original low-volume ambient sound bed and include a narration script separately. Do not pretend the narration script is an audio voiceover. If a licensed voice engine is introduced later, document the engine/model and its output-use licence and provide a silent-safe fallback.
+
+The Reel story arc should be: clear hook → one useful design idea → practical insight → material/maintenance consideration → useful reader question. Make each scene readable on a phone, use restrained motion/transitions, and avoid showing five unrelated topics in the same Reel. When same-day licensed photos are used in the carousel, they may be reused inside the same-day Reel with proper credits. When no usable licensed media can be verified, use original diagram/concept artwork and label it clearly.
+
+## Daily pack and local delivery
+- Produce a single daily content pack containing the Reel MP4 and cover, Reel caption, Marathi script and SRT, 4 separate carousel JPGs, 4 PNG masters, contact sheet, bilingual carousel caption, source/licence notes, Reel manifest, and SHA-256 manifest.
+- Validate the output files before uploading the pack artifact. Keep Reel MP4 and large Reel scene masters out of Git history; use a GitHub Actions artifact with a documented retention window.
+- A cloud runner cannot save directly to the user's local PC. Provide a local downloader and a user-installable Windows Task Scheduler script. Schedule the local job after the cloud build, use GitHub CLI authentication, store daily packs in date-named local folders, verify SHA-256 hashes, and log failures. Never claim local scheduling is enabled before the user runs the installer.
+- A failed or incomplete daily build must not create an artifact labelled ready-to-post. Never auto-publish the Reel without explicit separate implementation and confirmation of the correct publishing route.
