@@ -380,7 +380,7 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
     if index == 1:
         draw.text((x, 710), concept["type"].upper(), font=latin_font(23, True), fill=muted)
         y = text_block(draw, concept["headline"], x, 760, latin_font(74, True), width, white, 5, 2)
-        y = text_block(draw, concept["mr"], x, y + 12, font(43, True), width, white, 7, 2)
+        y = text_block(draw, concept.get("mr") or concept.get("headline_mr") or "आजचा वास्तु-विचार", x, y + 12, font(43, True), width, white, 7, 2)
         text_block(draw, concept["idea"], x, y + 20, latin_font(26), width, muted, 7, 2)
     elif index == 2:
         draw.text((x, 790), "01 / COMFORT", font=latin_font(24, True), fill=muted)
