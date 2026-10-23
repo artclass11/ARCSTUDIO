@@ -305,7 +305,7 @@ def main() -> None:
     for i in range(SCENE_COUNT):
         filters.append(
             f"[{i}:v]scale=1080:1920,zoompan=z='min(zoom+0.00018,1.025)':"
-            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps={FPS},"
+            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps={FPS},fps={FPS},"
             f"settb=AVTB,setpts=PTS-STARTPTS,setsar=1,format=yuv420p[v{i}]"
         )
     # Use a constant-frame-rate concatenation. This is more robust on GitHub
