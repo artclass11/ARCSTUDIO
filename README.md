@@ -1,10 +1,13 @@
-# ARCSTUDIO91 Daily Publisher
+# ARCSTUDIO91 Daily Content Publisher
 
-Free daily architecture-carousel workflow for @arcstudio91. It uses Python/Pillow and reusable photographs from Wikimedia Commons to create four separate 1080x1350 images and can publish to Instagram and a connected Facebook Page through Meta's official Graph API.
+Free daily architecture content workflow for @arcstudio91. Each daily build creates one Marathi-first vertical Reel plus a four-slide architecture carousel using Python/Pillow, NumPy and FFmpeg. It uses reusable Wikimedia Commons photography only when a suitable licence is verified; otherwise it falls back to original concept artwork. The carousel can publish to Instagram and a connected Facebook Page through Meta's official Graph API only when explicitly enabled.
 
 ## Daily behaviour
 
 - Runs around 08:07 India time (02:37 UTC).
+- Creates one Reel per daily build: MP4, cover JPG, Marathi on-screen text, Marathi subtitle file, a short Marathi narration script, and an original low-volume ambient sound bed. It intentionally avoids low-quality robotic TTS; the Reel has no spoken voiceover by default.
+- Validates Reel format (1080×1920, H.264, 20–30 seconds, audio stream), carousel dimensions, source metadata, and SHA-256 file manifest before packaging.
+- Uploads the full content folder as the GitHub Actions artifact `ARCSTUDIO91-Daily-Pack`, retained for 30 days. Video files are kept in the artifact instead of Git history to avoid repository bloat.
 - Rotates original concepts across 10 editorial pillars: design studies; climate-wise living; space planning; durability and repairability; people-first places; adaptive reuse; interiors and sensory design; landscape and water; architecture explainers; and design decision stories.
 - Includes residential, apartment, villa, office, healthcare, education, hospitality, retail, public-space, landscape and retrofit typologies, plus practical lessons on wayfinding, acoustics, daylight, maintenance, materials and water.
 - Records concept date, pillar, headline, core insight and visual motif in `data/concept_history.json`; the selector avoids recently used concepts for up to 30 prior entries when alternatives exist.
@@ -18,6 +21,25 @@ Free daily architecture-carousel workflow for @arcstudio91. It uses Python/Pillo
 - Uses free tools only. No paid image credits, Metricool or Windsor.ai. The daily workflow is scheduled for approximately 08:07 India time; generation is separate from actual platform publishing.
 
 Reference photos are inspirational examples and are not represented as completed ARCSTUDIO91 projects. If suitable licensed images are unavailable, generation fails safely and no post is published.
+
+## Automatic download to your Windows computer
+
+The cloud workflow cannot write files directly to your computer. A free local downloader and Task Scheduler installer are included so your PC can fetch each daily pack from GitHub Actions and save it by date.
+
+1. Install [GitHub CLI](https://cli.github.com/) and Git for Windows if they are not installed.
+2. Open PowerShell and sign in once with:
+   `gh auth login`
+3. Clone this public repository:
+   `gh repo clone artclass11/ARCSTUDIO`
+4. Open the cloned folder, then run:
+   `powershell -ExecutionPolicy Bypass -File .\scripts\install_daily_download_task.ps1`
+5. The task runs at 08:35 local time, after the cloud build scheduled at 08:07 India time. Packs are saved under `Documents\ARCSTUDIO91\DailyPacks\YYYY-MM-DD`.
+
+To test immediately, run `powershell -ExecutionPolicy Bypass -File .\scripts\download_latest_pack.ps1`. The script checks SHA-256 hashes and can download missing recent packs from completed runs when your computer was offline, as long as the GitHub Actions artifacts have not expired. Keep GitHub CLI authenticated. The computer needs an internet connection and to be powered on; with an interactive Task Scheduler principal, the Windows user must be signed in. Artifacts are retained for 30 days, not forever.
+
+## Daily Reel package
+
+The artifact contains `reel.mp4`, `reel_cover.jpg`, `reel_caption.txt`, `reel_subtitles_mr.srt`, `reel_script_marathi.txt`, scene PNGs, and the four separate carousel JPGs/PNG masters. The spoken narration is not synthesized in this version: the Reel is Marathi-led on screen and has an original ambient bed, avoiding a robotic voice. The narration script is included separately for a natural human recording or a properly licensed neural voice. Nothing should be described as published until Instagram confirms it.
 
 ## One-time Meta setup
 
