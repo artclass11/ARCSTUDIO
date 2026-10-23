@@ -1,0 +1,8 @@
+# Install a CUDA-enabled PyTorch build first using https://pytorch.org/get-started/locally/
+# These packages enable local FLUX.1-schnell inference; they do not invoke paid APIs.
+diffusers>=0.35.0
+transformers>=4.44.0
+accelerate>=1.0.0
+safetensors>=0.4.4
+sentencepiece>=0.2.0
+protobuf>=4.25.0
