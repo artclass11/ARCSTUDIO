@@ -1,4 +1,4 @@
-name: ARCSTUDIO91 Daily Architecture
+name: ARCSTUDIO91 Daily AI Content Seed
 
 on:
   schedule:
@@ -10,14 +10,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: arcstudio91-daily-publishing
+  group: arcstudio91-daily-content
   cancel-in-progress: false
 
 jobs:
   create-and-publish:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - name: Check out publisher
         uses: actions/checkout@v4
@@ -34,45 +34,28 @@ jobs:
       - name: Install fonts and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y fonts-noto-core fonts-noto-devanagari fonts-dejavu-core fontconfig ffmpeg
+          sudo apt-get install -y fonts-noto-core fonts-noto-devanagari fonts-dejavu-core fontconfig
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Generate four separate carousel slides
-        run: python scripts/generate_daily.py
+      - name: Select today's original architecture concept
+        run: python scripts/create_daily_concept.py
 
-      - name: Render Marathi-first vertical Reel
-        run: python scripts/generate_reel.py
-
-      - name: Validate full daily content pack
-        run: python scripts/package_daily.py
-
-      - name: Commit carousel media and source history
-        id: commit_media
+      - name: Commit concept freshness history
         run: |
           git config user.name "ARCSTUDIO91 Daily Publisher"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Do not put daily MP4s or large Reel masters into Git history; they remain in the downloadable artifact.
-          git add output/current/slide_*.jpg output/current/slide_*.png output/current/caption.txt output/current/sources.json output/current/concept.json output/current/research_notes.md data/image_history.json data/concept_history.json
-          git commit -m "ARCSTUDIO91 daily content $(date -u +%F)" || echo "No carousel assets changed"
+          git add data/concept_history.json output/current/concept.json output/current/cloud_source_manifest.json output/current/package_manifest.json
+          git commit -m "ARCSTUDIO91 daily concept seed $(date -u +%F)" || echo "Concept seed is unchanged"
           git push origin HEAD:main
-          echo "asset_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Keep the complete Reel and carousel pack available for download
+      - name: Upload concept seed for local open-weight AI generation
         uses: actions/upload-artifact@v4
         with:
-          name: ARCSTUDIO91-Daily-Pack
-          path: output/current/
+          name: ARCSTUDIO91-Cloud-Source-Pack
+          path: |
+            output/current/concept.json
+            output/current/cloud_source_manifest.json
+            output/current/package_manifest.json
           if-no-files-found: error
           retention-days: 30
-
-      - name: Publish to Instagram and Facebook Page
-        env:
-          AUTO_PUBLISH_ENABLED: ${{ vars.AUTO_PUBLISH_ENABLED }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
-          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
-          META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          ASSET_COMMIT_SHA: ${{ steps.commit_media.outputs.asset_sha }}
-          META_GRAPH_API_VERSION: v26.0
-        run: python scripts/publish_daily.py
