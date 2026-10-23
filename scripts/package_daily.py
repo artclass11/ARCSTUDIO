@@ -4,20 +4,21 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 from datetime import date
 from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "output" / "current"
+OUT = Path(os.environ.get("ARCSTUDIO_OUTPUT_DIR", str(ROOT / "output" / "current"))).resolve()
 PACK_DIR = ROOT / "output"
 
 REQUIRED = [
     "slide_01.jpg", "slide_02.jpg", "slide_03.jpg", "slide_04.jpg",
     "slide_01.png", "slide_02.png", "slide_03.png", "slide_04.png",
     "preview_contact_sheet.jpg", "caption.txt", "sources.json", "concept.json",
-    "research_notes.md", "reel.mp4", "reel_cover.jpg", "reel_caption.txt",
+    "research_notes.md", "ai_generation_manifest.json", "reel.mp4", "reel_cover.jpg", "reel_caption.txt",
     "reel_script_marathi.txt", "reel_subtitles_mr.srt", "reel_manifest.json", "reel_ambient.wav",
     "reel_scene_01.png", "reel_scene_02.png", "reel_scene_03.png", "reel_scene_04.png", "reel_scene_05.png",
 ]
@@ -80,6 +81,13 @@ def main() -> None:
         raise RuntimeError("Pack QA failed: carousel and Reel dates do not match.")
     if concept_data.get("type") != source_data.get("concept"):
         raise RuntimeError("Pack QA failed: concept metadata is inconsistent.")
+    if source_data.get("visual_mode") != "locally generated open-weight AI concept visuals":
+        raise RuntimeError("Strict AI QA failed: the pack does not confirm locally generated open-weight AI visuals.")
+    ai_data = json.loads((OUT / "ai_generation_manifest.json").read_text(encoding="utf-8"))
+    if ai_data.get("mode") != "local open-weight inference; no paid hosted API":
+        raise RuntimeError("Strict AI QA failed: model provenance is missing or noncompliant.")
+    if ai_data.get("model_id") != "black-forest-labs/FLUX.1-schnell" or ai_data.get("model_license") != "Apache-2.0":
+        raise RuntimeError("Strict AI QA failed: unapproved model or model licence.")
 
     posting_notes = (
         f"ARCSTUDIO91 DAILY CONTENT PACK — {source_data['date']}\n\n"
@@ -96,7 +104,7 @@ def main() -> None:
         "AUDIO / LANGUAGE\n"
         "This version uses Marathi on-screen text and an original, low-volume ambient sound bed. It does not contain a synthetic spoken voiceover. The Marathi narration script is included separately; add a human or properly licensed natural voice if spoken narration is required.\n\n"
         "MEDIA / CLAIMS\n"
-        "Inspect research_notes.md and sources.json for reference-photo attributions or confirmation that original concept artwork was used. Concept visuals are not completed projects. This pack is general educational content, not construction advice. Do not claim the content was published; verify Instagram after manual upload.\n\n"
+        "Inspect research_notes.md, sources.json and ai_generation_manifest.json for the local model, prompts and provenance. AI concept visuals are not completed projects. This pack is general educational content, not construction advice. Do not claim the content was published; verify Instagram after manual upload.\n\n"
         "INSTAGRAM UPLOAD\n"
         "1. Create a Reel and select reel.mp4.\n"
         "2. Choose reel_cover.jpg as the cover and check the crop.\n"
