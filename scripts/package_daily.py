@@ -115,7 +115,7 @@ def main() -> None:
 
     package_files = [
         p for p in sorted(OUT.iterdir())
-        if p.is_file() and not p.name.startswith("_reel_source_")
+        if p.is_file() and p.name != "package_manifest.json" and not p.name.startswith("_reel_source_")
     ]
     manifest = {
         "date": day,
