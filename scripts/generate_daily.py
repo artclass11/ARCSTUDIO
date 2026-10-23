@@ -356,12 +356,15 @@ def original_concept_art(concept: dict[str, Any], variant: int) -> dict[str, Any
         "original_art": True,
     }
 
-def header(draw: ImageDraw.ImageDraw, index: int, contact: bool = False) -> None:
+def header(draw: ImageDraw.ImageDraw, index: int, contact: bool = False,
+           ai_generated: bool = False) -> None:
     top_font = latin_font(28, True)
     small = latin_font(19)
     draw.text((64, 54), "@arcstudio91", font=top_font, fill=(255, 255, 255, 250))
     if contact:
         label = "+91 9921894495"
+    elif ai_generated:
+        label = f"AI CONCEPT / {index:02d}"
     else:
         label = f"DESIGN NOTE / {index:02d}"
     width = draw.textlength(label, font=small)
@@ -370,7 +373,7 @@ def header(draw: ImageDraw.ImageDraw, index: int, contact: bool = False) -> None
 def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> Path:
     image = darken_photo(crop_to_portrait(photo["bytes"])).convert("RGBA")
     draw = ImageDraw.Draw(image, "RGBA")
-    header(draw, index, contact=(index == 4))
+    header(draw, index, contact=(index == 4), ai_generated=photo.get("ai_generated", False))
     x, width = 68, 930
     white = (255, 255, 255, 255)
     muted = (246, 246, 246, 240)
