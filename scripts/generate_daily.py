@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 import subprocess
 from datetime import date
@@ -16,7 +17,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "output" / "current"
+OUT = Path(os.environ.get("ARCSTUDIO_OUTPUT_DIR", str(ROOT / "output" / "current"))).resolve()
 DATA = ROOT / "data"
 HISTORY_PATH = DATA / "image_history.json"
 CONCEPT_HISTORY_PATH = DATA / "concept_history.json"
@@ -397,7 +398,9 @@ def render_slide(photo: dict[str, Any], concept: dict[str, Any], index: int) -> 
         draw.text((x, y), "SUSTAINABLE DESIGN · RENOVATION", font=latin_font(19, True), fill=muted)
         y += 40
         text_block(draw, "Local materials • verified quality • site-specific details", x, y, latin_font(21), width, muted, 6, 2)
-        footer = "ORIGINAL CONCEPT ART • NOT A BUILT PROJECT" if photo.get("original_art") else "PHOTO SOURCES + LICENCES IN CAPTION"
+        footer = ("AI-GENERATED CONCEPT ART • NOT A BUILT PROJECT" if photo.get("ai_generated")
+                  else ("ORIGINAL CONCEPT ART • NOT A BUILT PROJECT" if photo.get("original_art")
+                        else "PHOTO SOURCES + LICENCES IN CAPTION"))
         draw.text((x, 1280), footer, font=latin_font(16), fill=muted)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"slide_{index:02d}.jpg"
@@ -451,7 +454,9 @@ def write_research_notes(concept: dict[str, Any], photos: list[dict[str, Any]], 
         f"- Practical comfort lens: {concept['comfort']}",
         f"- Durability/maintenance lens: {concept['life']}",
         "- Scope: general educational design discussion, not construction advice or a site-specific specification.",
-        ("- Image status: original concept illustrations; not real project photographs." if all(p.get("original_art") for p in photos) else "- Image status: licensed reference photography with individual credits below; images are not represented as completed ARCSTUDIO91 projects."),
+        ("- Image status: locally AI-generated concept artwork using black-forest-labs/FLUX.1-schnell; not real project photographs." if all(p.get("ai_generated") for p in photos)
+         else ("- Image status: original concept illustrations; not real project photographs." if all(p.get("original_art") for p in photos)
+               else "- Image status: licensed reference photography with individual credits below; images are not represented as completed ARCSTUDIO91 projects.")),
         "- Profile status: the public Instagram profile is only used if accessible; no profile observations are inferred by this generator.",
         "",
         "## Image source, author and licence",
@@ -464,9 +469,18 @@ def write_research_notes(concept: dict[str, Any], photos: list[dict[str, Any]], 
             f"   - Licence URL: {photo.get('license_url') or 'Not supplied in Commons metadata'}",
             f"   - Source: {photo['source_page']}",
         ])
+    if all(p.get("ai_generated") for p in photos):
+        notes.extend([
+            "",
+            "## Free AI generation",
+            "- Model: black-forest-labs/FLUX.1-schnell",
+            "- Model licence: Apache-2.0 (check the current upstream model card before redistribution of model weights)",
+            "- Inference: local GPU, using open weights; no hosted inference API, paid generation credits or paid image service.",
+            "- Prompts and visual seeds are recorded in the companion ai_generation_manifest.json.",
+        ])
     notes.extend([
         "",
-        "Research limitation: this automated run verifies image source/licence metadata and rotates the editorial concept. It does not claim a comprehensive live survey of worldwide architecture trends.",
+        "Research limitation: this automated run verifies media provenance and rotates the editorial concept. It does not claim a comprehensive live survey of worldwide architecture trends.",
     ])
     target = OUT / "research_notes.md"
     target.write_text("\n".join(notes) + "\n", encoding="utf-8")
@@ -480,9 +494,11 @@ def make_caption(concept: dict[str, Any], photos: list[dict[str, Any]], today: d
         f"English: {concept['idea']} {concept['comfort']} {concept['life']}\n\n"
         "सेवा: घर व व्यावसायिक आर्किटेक्चर • रिसॉर्ट/कॅफे • इंटिरियर • शाश्वत डिझाइन • नूतनीकरण.\n"
         "Services: Residential & commercial architecture • Resorts/hotels/cafés • Interiors • Sustainable design • Renovation/adaptive reuse • Material guidance.\n"
-        + ("हे मूळ संकल्पचित्र आहे; प्रत्यक्ष बांधलेला प्रकल्प नाही. This is original concept artwork, not a real project photo.\n\n"
-           if all(p.get("original_art") for p in photos)
-           else "हे संदर्भ फोटो आहेत; ARCSTUDIO91 चे पूर्ण झालेले प्रकल्प नाहीत. These licensed photos are references, not completed ARCSTUDIO91 projects.\n\n")
+        + ("हे AI-निर्मित संकल्पचित्र आहे; प्रत्यक्ष बांधलेला प्रकल्प नाही. These are AI-generated concept visuals, not real project photographs. Model: FLUX.1-schnell (Apache-2.0).\n\n"
+           if all(p.get("ai_generated") for p in photos)
+           else ("हे मूळ संकल्पचित्र आहे; प्रत्यक्ष बांधलेला प्रकल्प नाही. This is original concept artwork, not a real project photo.\n\n"
+                 if all(p.get("original_art") for p in photos)
+                 else "हे संदर्भ फोटो आहेत; ARCSTUDIO91 चे पूर्ण झालेले प्रकल्प नाहीत. These licensed photos are references, not completed ARCSTUDIO91 projects.\n\n"))
     )
     photo_credits = [p for p in photos if not p.get("original_art")]
     if photo_credits:
