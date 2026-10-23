@@ -37,7 +37,7 @@ Create original, useful architecture education for @arcstudio91 using free/open-
 - Add concise research/source notes and identify any illustrative images. Do not make unsupported claims such as guaranteed 100-year life; longevity is an aspiration, not a guarantee.
 
 ## Free-tool fallback policy
-If image generation is rate-limited or unavailable, do not retry repeatedly and do not block the entire content workflow. Use Pillow-built typography/layout, original vector diagrams from Inkscape/SVG, or a simple Blender concept model when feasible. If a high-quality result cannot be made from available free assets, stop safely and report the limitation instead of using an unlicensed image or lowering quality silently.
+If the approved local AI model is unavailable, rate-limited in the local environment, out of memory, or fails QA, do not create a final-ready pack. The cloud may deliver only a clearly labelled concept seed. Pillow, SVG and FFmpeg can handle typography/layout and motion, but must not replace the required model-generated visuals. Stop safely and report the exact blocker. Never switch to a paid or hosted generation service, stock images, or placeholder visuals.
 
 ## Publishing safety
 - Generate and inspect the package before considering publication.
@@ -76,7 +76,7 @@ Rotate broadly across these pillars rather than posting the same building type e
 - Review recent output images and captions for visual repetition, legibility, useful contrast, natural-looking imagery, Marathi font shaping, attribution, and correct contact placement.
 - Vary camera/diagram language across days: context view, threshold detail, plan-like schematic, shaded section, material close-up, landscape edge or spatial sequence. Never use the same layout as a template every day without a reason.
 - Every post should look intentional as a set, but visual consistency must come from typography, spacing and palette—not from repeating the same composition.
-- Label concept sketches/renders as concepts and stock/reference photography as reference imagery. Never imply that illustrative content is a completed ARCSTUDIO91 project.
+- Label all generated visuals as AI concept artwork, not a completed ARCSTUDIO91 project. Never imply that illustrative content is built work or a construction-ready drawing.
 
 ## Daily carousel publishing package
 By default, produce four 1080×1350 slides as separate JPGs and PNG masters plus a review contact sheet, bilingual caption and source/quality notes. Keep contact details only at the top of slide 4. Build the asset package even when publishing is unavailable; publishing status must remain explicit and truthful.
@@ -87,7 +87,7 @@ Create exactly one vertical Instagram Reel per daily build in addition to the fo
 
 Avoid robotic Marathi TTS. Unless a natural, properly licensed free neural voice can be run and quality-checked in the workflow, use Marathi on-screen storytelling plus the original low-volume ambient sound bed and include a narration script separately. Do not pretend the narration script is an audio voiceover. If a licensed voice engine is introduced later, document the engine/model and its output-use licence and provide a silent-safe fallback.
 
-The Reel story arc should be: clear hook → one useful design idea → practical insight → material/maintenance consideration → useful reader question. Make each scene readable on a phone, use restrained motion/transitions, and avoid showing five unrelated topics in the same Reel. When same-day licensed photos are used in the carousel, they may be reused inside the same-day Reel with proper credits. When no usable licensed media can be verified, use original diagram/concept artwork and label it clearly.
+The Reel story arc should be: clear hook → one useful design idea → practical insight → material/maintenance consideration → useful reader question. Make each scene readable on a phone, use restrained motion/transitions, and avoid showing five unrelated topics in the same Reel. Reuse the same-day AI-generated backgrounds from the carousel in the Reel with carefully chosen crops and scene pacing. If the images are unavailable, do not build a final Reel using sketches or stock-photo substitutes.
 
 ## Daily pack and local delivery
 - Produce a single daily content pack containing the Reel MP4 and cover, Reel caption, Marathi script and SRT, 4 separate carousel JPGs, 4 PNG masters, contact sheet, bilingual carousel caption, source/licence notes, Reel manifest, and SHA-256 manifest.
